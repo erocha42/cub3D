@@ -13,7 +13,9 @@ OBJ_DIR     = 	obj
 
 SRC         =	main.c \
 				getnextline/get_next_line.c \
-				getnextline/get_next_line_utils.c
+				getnextline/get_next_line_utils.c \
+				mandatory/init.c \
+				mandatory/parsing.c
 
 BONUS_SRC   = 	main.c
 
