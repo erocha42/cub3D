@@ -55,5 +55,6 @@ typedef struct s_game
 
 int				init_mlx(t_game *game);
 int				checking(char *av[]);
+void				raycasting(t_game *game);
 
 #endif
