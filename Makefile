@@ -15,7 +15,8 @@ SRC         =	main.c \
 				getnextline/get_next_line.c \
 				getnextline/get_next_line_utils.c \
 				mandatory/init.c \
-				mandatory/parsing.c
+				mandatory/parsing.c \
+				mandatory/utils/utils.c
 
 BONUS_SRC   = 	main.c
 

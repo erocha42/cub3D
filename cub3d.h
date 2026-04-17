@@ -10,6 +10,16 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+typedef	enum e_error
+{
+	NO_ERROR,
+	EXTD_ERROR,
+	FD_ERROR,
+	MALLOC_ERROR,
+	MAP_ERROR,
+	DATA_ERROR
+}			t_error;
+
 typedef struct s_img
 {
 	void		*img;
@@ -54,6 +64,8 @@ typedef struct s_game
 }				t_game;
 
 int				init_mlx(t_game *game);
-int				checking(char *av[]);
+int				parsing(char *av[], t_game *game);
+void			clean_exit(t_game *game, t_error error_name);
+void			free_tab(char **tab);
 
 #endif
