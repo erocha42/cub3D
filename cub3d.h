@@ -64,8 +64,10 @@ typedef struct s_game
 }				t_game;
 
 int				init_mlx(t_game *game);
-int				parsing(char *av[], t_game *game);
+void			parsing(char *av[], t_game *game);
 void			clean_exit(t_game *game, t_error error_name);
 void			free_tab(char **tab);
+void			raycasting(t_game *game);
+int				init_images(t_game *game);
 
 #endif
