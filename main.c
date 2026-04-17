@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/16 17:43:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/17 16:05:35 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	key_hook(int keycode, t_game *game)
 	{
 		OldDirX = game->player.dir_x;
 		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			- game->player.dir_y * sin(-RotSpeed);
+			- game->player.dir_y * sin(RotSpeed);
 		game->player.dir_y = OldDirX * sin(RotSpeed) + game->player.dir_y
 			* cos(RotSpeed);
 		OldPlaneX = game->player.plane_x;
@@ -58,9 +58,9 @@ static int	key_hook(int keycode, t_game *game)
 	{
 		OldDirX = game->player.dir_x;
 		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			+ game->player.dir_y * sin(-RotSpeed);
-		game->player.dir_y = game->player.dir_y * cos(RotSpeed) + -OldDirX
-			* sin(RotSpeed);
+			+ game->player.dir_y * sin(RotSpeed);
+		game->player.dir_y = -OldDirX * sin(RotSpeed) + game->player.dir_y
+			* cos(RotSpeed);
 		OldPlaneX = game->player.plane_x;
 		game->player.plane_x = game->player.plane_x * cos(RotSpeed)
 			+ game->player.plane_y * sin(RotSpeed);
@@ -74,8 +74,23 @@ static int	key_hook(int keycode, t_game *game)
 int	main(int ac, char *av[])
 {
 	t_game	game;
-	char	*dummy_map[] = {"11111111", "10000001", "10010001", "10000001",
-			"11111111"};
+	char *dummy_map[] = {
+        "111111111111111",
+        "100000000000001",
+        "100011111110001",
+        "100010000010001",
+        "100010000010001",
+        "100011000110001",
+        "100000000000001",
+        "100000000000001",
+        "111111101111111",
+        "100000000000001",
+        "100000000000001",
+        "100100010001001",
+        "100000000000001",
+        "100100010001001",
+        "111111111111111"
+	};
 
 	if (ac != 2)
 	{
@@ -89,6 +104,10 @@ int	main(int ac, char *av[])
 	game.player.dir_y = 0.0;
 	game.player.plane_x = 0.0;
 	game.player.plane_y = 0.66;
+	game.n_path = "./sprites/wall1.xpm";
+    game.s_path = "./sprites/wall2.xpm";
+    game.e_path = "./sprites/wall3.xpm";
+    game.w_path = "./sprites/wall4.xpm";
 	// init_game(&game);
 	if (checking(av) == 0)
 	{
@@ -98,6 +117,8 @@ int	main(int ac, char *av[])
 	{
 		return (0);
 	}
+	if (init_images(&game) == 0)
+		return 0;
 	raycasting(&game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_hook, &game);
 	mlx_loop(game.mlx_ptr);

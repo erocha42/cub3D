@@ -16,7 +16,8 @@ SRC         =	main.c \
 				getnextline/get_next_line_utils.c \
 				mandatory/init.c \
 				mandatory/parsing.c \
-				mandatory/raycasting.c
+				mandatory/raycasting.c \
+				mandatory/init_sprite.c
 
 BONUS_SRC   = 	main.c
 
