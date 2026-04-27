@@ -59,6 +59,7 @@ typedef struct s_game
 	char		**map;
 	int			map_width;
 	int			map_height;
+	int			direction_player;
 
 	t_player	player;
 }				t_game;
