@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/04/28 11:46:54 by erocha--         ###   ########.fr       */
+=======
+/*   Updated: 2026/04/27 19:02:23 by mchesnea         ###   ########.fr       */
+>>>>>>> 433c68c739a05b71c9cb10717a1ded8faa95f34c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +27,34 @@ static int	key_hook(int keycode, t_game *game)
 	RotSpeed = 0.3;
 	if (keycode == 119)
 	{
-		game->player.x += game->player.dir_x * MoveSpeed;
-		game->player.y += game->player.dir_y * MoveSpeed;
+		if (game->map[(int)game->player.y][(int)(game->player.x + game->player.dir_x * MoveSpeed)] != '1')
+            game->player.x += game->player.dir_x * MoveSpeed;
+        if (game->map[(int)(game->player.y + game->player.dir_y * MoveSpeed)][(int)game->player.x] != '1')
+            game->player.y += game->player.dir_y * MoveSpeed;
 	}
 	if (keycode == 115)
 	{
-		game->player.x -= game->player.dir_x * MoveSpeed;
-		game->player.y -= game->player.dir_y * MoveSpeed;
-	}
-	if (keycode == 97)
-	{
-		game->player.x -= game->player.dir_y * MoveSpeed;
-		game->player.y += game->player.dir_x * MoveSpeed;
+		if (keycode == 115)
+    {
+        if (game->map[(int)game->player.y][(int)(game->player.x - game->player.dir_x * MoveSpeed)] != '1')
+            game->player.x -= game->player.dir_x * MoveSpeed;
+        if (game->map[(int)(game->player.y - game->player.dir_y * MoveSpeed)][(int)game->player.x] != '1')
+            game->player.y -= game->player.dir_y * MoveSpeed;
+    }
 	}
 	if (keycode == 100)
 	{
-		game->player.x += game->player.dir_y * MoveSpeed;
-		game->player.y -= game->player.dir_x * MoveSpeed;
+		if (game->map[(int)game->player.y][(int)(game->player.x + game->player.dir_y * MoveSpeed)] != '1')
+            game->player.x += game->player.dir_y * MoveSpeed;
+        if (game->map[(int)(game->player.y - game->player.dir_x * MoveSpeed)][(int)game->player.x] != '1')
+            game->player.y -= game->player.dir_x * MoveSpeed;
+	}
+	if (keycode == 97)
+	{
+		if (game->map[(int)game->player.y][(int)(game->player.x - game->player.dir_y * MoveSpeed)] != '1')
+            game->player.x -= game->player.dir_y * MoveSpeed;
+        if (game->map[(int)(game->player.y + game->player.dir_x * MoveSpeed)][(int)game->player.x] != '1')
+            game->player.y += game->player.dir_x * MoveSpeed;
 	}
 	if (keycode == 65361)
 	{
@@ -102,18 +117,18 @@ int	main(int ac, char *av[])
 	}
 	init_game(&game);
 	parsing(av, &game);
-	//game.map = dummy_map;
-	//game.player.x = 2.5;
-	//game.player.y = 1.5;
-	//game.player.dir_x = -1.0;
-	//game.player.dir_y = 0.0;
-	//game.player.plane_x = 0.0;
-	//game.player.plane_y = 0.66;
-	//game.n_path = "./sprites/wall1.xpm";
-    //game.s_path = "./sprites/wall2.xpm";
-    //game.e_path = "./sprites/wall3.xpm";
-    //game.w_path = "./sprites/wall4.xpm";
-	//// init_game(&game);
+	game.map = dummy_map;
+	game.player.x = 2;
+	game.player.y = 2;
+	game.player.dir_x = -1.0;
+	game.player.dir_y = 0.0;
+	game.player.plane_x = 0.0;
+	game.player.plane_y = 0.66;
+	game.n_path = "./sprites/wall3.xpm";
+    game.s_path = "./sprites/wall3.xpm";
+    game.e_path = "./sprites/wall3.xpm";
+    game.w_path = "./sprites/wall3.xpm";
+	// init_game(&game);
 	if (init_mlx(&game) == 0)
 		return (0);
 	if (init_images(&game) == 0)
