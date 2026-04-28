@@ -6,18 +6,18 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:23:18 by erocha--          #+#    #+#             */
-/*   Updated: 2026/04/17 15:26:17 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/04/28 11:34:09 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_tab(char **tab)
+void	free_tab(char **tab, int limit)
 {
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (i < limit)
 	{
 		free(tab[i]);
 		i++;

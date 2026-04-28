@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/17 14:11:57 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/28 12:56:18 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void	init_game(t_game *game)
-// {
-
-// }
+void	init_game(t_game *game)
+{
+	game->map = NULL;
+	game->player.x = -1;
+	game->map_height = 0;
+}
 
 static int	close_window(t_game *game)
 {

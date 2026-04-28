@@ -57,6 +57,7 @@ typedef struct s_game
 	int			ground_color;
 	int			ceiling_color;
 	char		**map;
+	char		*map_path;
 	int			map_width;
 	int			map_height;
 
@@ -64,10 +65,12 @@ typedef struct s_game
 }				t_game;
 
 int				init_mlx(t_game *game);
+void			init_game(t_game *game);
 void			parsing(char *av[], t_game *game);
 void			clean_exit(t_game *game, t_error error_name);
-void			free_tab(char **tab);
+void			free_tab(char **tab, int limit);
 void			raycasting(t_game *game);
 int				init_images(t_game *game);
+void			valid_map(t_game *game);
 
 #endif

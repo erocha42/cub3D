@@ -12,13 +12,15 @@ MLX_FLAGS   = -L./minilibx-linux -lmlx -lXext -lX11 -lm -lz
 OBJ_DIR     = 	obj
 
 SRC         =	main.c \
+				clean_exit.c \
 				getnextline/get_next_line.c \
 				getnextline/get_next_line_utils.c \
 				mandatory/init.c \
 				mandatory/parsing.c \
 				mandatory/utils/utils.c \
 				mandatory/raycasting.c \
-				mandatory/init_sprite.c
+				mandatory/init_sprite.c \
+				mandatory/valid_map.c
 
 BONUS_SRC   = 	main.c
 

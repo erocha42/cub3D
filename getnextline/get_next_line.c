@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 10:36:22 by mchesnea          #+#    #+#             */
-/*   Updated: 2025/11/13 15:38:43 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/27 13:33:51 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,28 @@ void	ft_var(char **var, int fd, char *buff)
 	int		read_size;
 
 	read_size = 1;
-	while (read_size > 0 && ft_strchr(*var, '\n') == NULL)
+	while (read_size > 0 && ft_strchr(var[fd], '\n') == NULL)
 	{
 		read_size = read(fd, buff, BUFFER_SIZE);
 		if (read_size < 0)
 		{
-			if (*var != NULL)
+			if (var[fd] != NULL)
 			{
-				free(*var);
-				*var = NULL;
+				free(var[fd]);
+				var[fd] = NULL;
 			}
 			return ;
 		}
 		buff[read_size] = '\0';
-		tmp = *var;
-		*var = ft_strjoin(tmp, buff);
+		tmp = var[fd];
+		var[fd] = ft_strjoin(tmp, buff);
 		free(tmp);
 	}
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*var = NULL;
+	static char	*var[] = {NULL};
 	char		*buff;
 	char		*line;
 
@@ -80,19 +80,19 @@ char	*get_next_line(int fd)
 	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
-	ft_var(&var, fd, buff);
+	ft_var(var, fd, buff);
 	free(buff);
-	if (!var)
+	if (!var[fd])
 		return (NULL);
-	if (var && var[0] == '\0')
+	if (var[fd] && var[fd][0] == '\0')
 	{
-		free(var);
-		var = NULL;
+		free(var[fd]);
+		var[fd] = NULL;
 		return (NULL);
 	}
-	line = ft_extract_line(var);
+	line = ft_extract_line(var[fd]);
 	if (!line)
 		return (NULL);
-	var = ft_update_line(var);
+	var[fd] = ft_update_line(var[fd]);
 	return (line);
 }
