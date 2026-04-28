@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/28 12:56:48 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/04/28 17:41:46 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	color_recovery(t_game *game, char *line)
 	int		i;
 	int		color[3];
 	char	**tab;
-	
+
 	tab = ft_split(line, ',');
 	i = 0;
 	while (tab[i])
@@ -71,7 +71,7 @@ static int	color_recovery(t_game *game, char *line)
 
 char	*skip(char *line)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (line[i] && (!ft_isprint(line[i]) || line[i] == ' '))
@@ -81,12 +81,13 @@ char	*skip(char *line)
 
 static void	g_c_recovery(t_game *game, char *line, int data_counter[])
 {
-	char *arg;
+	char	*arg;
 
 	arg = skip(&line[2]);
 	if (!ft_strncmp(&line[0], "F", 1))
 	{
-		data_counter[4]++;data_counter[4]++;
+		data_counter[4]++;
+		data_counter[4]++;
 		game->ground_color = color_recovery(game, arg);
 	}
 	else if (!ft_strncmp(&line[0], "C", 1))
@@ -127,41 +128,42 @@ static void	data_recovery(t_game *game, char *line, int data_counter[])
 		g_c_recovery(game, line, data_counter);
 }
 
-static void data_handling(t_game *game, int fd)
+static void	data_handling(t_game *game)
 {
 	char	*line;
 	char	*line_trimed;
 	int		data_counter[6];
 
 	data_counter_init(data_counter);
-	line = get_next_line(fd);
+	line = get_next_line(game->fd);
 	while (line && (!data_counter[0] || !data_counter[1] || !data_counter[2]
-		|| !data_counter[3] || !data_counter[4] || !data_counter[5]))
+			|| !data_counter[3] || !data_counter[4] || !data_counter[5]))
 	{
 		if (!line[0] || line[0] == '\n')
 		{
 			free(line);
-			line = get_next_line(fd);
+			line = get_next_line(game->fd);
 			continue ;
 		}
 		line_trimed = ft_strtrim(line, "\n");
 		free(line);
 		if (data_counter[0] > 2 || data_counter[1] > 2 || data_counter[2] > 2
-			|| data_counter[3] > 2 || data_counter[4] > 2 || data_counter[5] > 2)
+			|| data_counter[3] > 2 || data_counter[4] > 2
+			|| data_counter[5] > 2)
 			clean_exit(game, DATA_ERROR);
 		data_recovery(game, skip(line_trimed), data_counter);
 		free(line_trimed);
-		line = get_next_line(fd);
+		line = get_next_line(game->fd);
 	}
 	free(line);
 }
 
-static	char	*search_map(t_game *game, int fd)
+static char	*search_map(t_game *game)
 {
 	char	*line;
 	int		i;
 
-	line = get_next_line(fd);
+	line = get_next_line(game->fd);
 	i = 0;
 	while (line)
 	{
@@ -171,7 +173,7 @@ static	char	*search_map(t_game *game, int fd)
 			|| line[i] == 'E' || line[i] == 'S')
 			return (line);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(game->fd);
 	}
 	free(line);
 	clean_exit(game, MAP_ERROR);
@@ -225,7 +227,7 @@ static int	search_longest(t_game *game)
 	while (line)
 	{
 		i = 0;
-		while(line[i])
+		while (line[i])
 			i++;
 		if (i > longest)
 			longest = i;
@@ -237,26 +239,24 @@ static int	search_longest(t_game *game)
 	return (longest);
 }
 
-static void	filler(t_game *game, int end_line, char *line, int line_nbr)
+static void	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < end_line)
 	{
-		if (!line[i] && i < end_line)
-		{
-			line[i + 1] = '\0';
+		if (i >= ft_strlen(line))
 			game->map[line_nbr][i] = ' ';
-		}
-		else if (line[i] == 'N' || line[i] == 'W'
-			|| line[i] == 'E' || line[i] == 'S')
+		else if (line[i] == 'N' || line[i] == 'W' || line[i] == 'E'
+			|| line[i] == 'S')
 		{
 			if (game->player.x != -1)
 				clean_exit(game, MAP_ERROR);
 			game->player.y = line_nbr;
 			game->player.x = i;
 			game->map[line_nbr][i] = line[i];
+			game->direction_player = line[i];
 		}
 		else if (!ft_isprint(line[i]))
 			game->map[line_nbr][i] = ' ';
@@ -272,7 +272,7 @@ static void	filler(t_game *game, int end_line, char *line, int line_nbr)
 	game->map[line_nbr][i] = '\0';
 }
 
-static void	mapper(t_game *game, int fd, char *first_line)
+static void	mapper(t_game *game, char *first_line)
 {
 	char	*line;
 	char	*line_trimed;
@@ -289,45 +289,41 @@ static void	mapper(t_game *game, int fd, char *first_line)
 		game->map[i] = malloc(sizeof(char) * game->map_width);
 		if (!game->map[i])
 			clean_exit(game, MALLOC_ERROR);
-		filler(game, game->map_width - 1, line_trimed, i);
 		game->map_height++;
+		filler(game, game->map_width - 1, line_trimed, i);
 		i++;
 		free(line_trimed);
-		line = get_next_line(fd);
+		line = get_next_line(game->fd);
 	}
 	free(line);
 }
 
-void	print_map(t_game *game)
-{
-	int	i;
+// void	print_map(t_game *game)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < game->map_height)
-	{
-		printf("%s\n", game->map[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < game->map_height)
+// 	{
+// 		printf("%s\n", game->map[i]);
+// 		i++;
+// 	}
+// }
 
 void	parsing(char *av[], t_game *game)
 {
 	int	len;
-	int	fd;
 
 	game->map_path = av[1];
 	len = ft_strlen(game->map_path);
 	if (len < 4 || ft_strncmp(&av[1][len - 4], ".cub", 4))
 		clean_exit(game, EXTD_ERROR);
-	fd = open(game->map_path, O_RDONLY);
-	if (fd < 0)
-	{
-		close(fd);
+	game->fd = open(game->map_path, O_RDONLY);
+	if (game->fd < 0)
 		clean_exit(game, FD_ERROR);
-	}
-	data_handling(game, fd);
-	mapper(game, fd, search_map(game, fd));
+	data_handling(game);
+	mapper(game, search_map(game));
 	valid_map(game);
-	print_map(game);
-	close(fd);
+	// print_map(game);
+	close(game->fd);
 }

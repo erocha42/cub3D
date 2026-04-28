@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/04/28 12:57:21 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/04/28 17:11:12 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ void	clean_exit(t_game *game, t_error error_name)
 {
 	if (game->map)
 		free_tab(game->map, game->map_height);
+	if (game->fd >= 0)
+		close(game->fd);
 	error_name_handling(error_name);
 }

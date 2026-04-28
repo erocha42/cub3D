@@ -10,7 +10,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-typedef	enum e_error
+typedef enum e_error
 {
 	NO_ERROR,
 	EXTD_ERROR,
@@ -18,7 +18,7 @@ typedef	enum e_error
 	MALLOC_ERROR,
 	MAP_ERROR,
 	DATA_ERROR
-}			t_error;
+}				t_error;
 
 typedef struct s_img
 {
@@ -61,6 +61,7 @@ typedef struct s_game
 	int			map_width;
 	int			map_height;
 	int			direction_player;
+	int 		fd;
 
 	t_player	player;
 }				t_game;
@@ -73,5 +74,6 @@ void			free_tab(char **tab, int limit);
 void			raycasting(t_game *game);
 int				init_images(t_game *game);
 void			valid_map(t_game *game);
+void			init_player_cam(t_game *game);
 
 #endif
