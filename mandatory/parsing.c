@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/28 17:41:46 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/29 17:08:31 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static void	g_c_recovery(t_game *game, char *line, int data_counter[])
 	arg = skip(&line[2]);
 	if (!ft_strncmp(&line[0], "F", 1))
 	{
-		data_counter[4]++;
 		data_counter[4]++;
 		game->ground_color = color_recovery(game, arg);
 	}
@@ -239,7 +238,7 @@ static int	search_longest(t_game *game)
 	return (longest);
 }
 
-static void	filler(t_game *game, size_t end_line, char *line, int line_nbr)
+static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 {
 	size_t	i;
 
@@ -252,7 +251,7 @@ static void	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 			|| line[i] == 'S')
 		{
 			if (game->player.x != -1)
-				clean_exit(game, MAP_ERROR);
+				return(0);
 			game->player.y = line_nbr;
 			game->player.x = i;
 			game->map[line_nbr][i] = line[i];
@@ -265,11 +264,12 @@ static void	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 		else
 		{
 			game->map[line_nbr][i] = '\0';
-			clean_exit(game, MAP_ERROR);
+			return(0);
 		}
 		i++;
 	}
 	game->map[line_nbr][i] = '\0';
+	return(1);
 }
 
 static void	mapper(t_game *game, char *first_line)
@@ -290,7 +290,11 @@ static void	mapper(t_game *game, char *first_line)
 		if (!game->map[i])
 			clean_exit(game, MALLOC_ERROR);
 		game->map_height++;
-		filler(game, game->map_width - 1, line_trimed, i);
+		if (filler(game, game->map_width - 1, line_trimed, i) == 0)
+		{
+			free(line_trimed);
+			clean_exit(game, MAP_ERROR);
+		}
 		i++;
 		free(line_trimed);
 		line = get_next_line(game->fd);

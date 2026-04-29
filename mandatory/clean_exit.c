@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/04/28 17:11:12 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/29 17:10:58 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,28 @@ static void	error_name_handling(t_error error_name)
 
 void	clean_exit(t_game *game, t_error error_name)
 {
+	char *gnl_rest;
 	if (game->map)
 		free_tab(game->map, game->map_height);
 	if (game->fd >= 0)
 		close(game->fd);
+	if (game->n_path)
+		free(game->n_path);
+	if (game->s_path)
+		free(game->s_path);
+	if (game->e_path)
+		free(game->e_path);
+	if (game->w_path)
+		free(game->w_path);
+	if (game->fd > 0)
+    {
+        gnl_rest = get_next_line(game->fd);
+        while (gnl_rest)
+        {
+            free(gnl_rest);
+            gnl_rest = get_next_line(game->fd);
+        }
+        close(game->fd);
+    }
 	error_name_handling(error_name);
 }
