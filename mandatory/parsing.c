@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/29 17:08:31 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/30 16:41:38 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ static void	data_recovery(t_game *game, char *line, int data_counter[])
 static void	data_handling(t_game *game)
 {
 	char	*line;
-	char	*line_trimed;
 	int		data_counter[6];
 
 	data_counter_init(data_counter);
@@ -144,14 +143,15 @@ static void	data_handling(t_game *game)
 			line = get_next_line(game->fd);
 			continue ;
 		}
-		line_trimed = ft_strtrim(line, "\n");
+		game->trim = ft_strtrim(line, "\n");
 		free(line);
 		if (data_counter[0] > 2 || data_counter[1] > 2 || data_counter[2] > 2
 			|| data_counter[3] > 2 || data_counter[4] > 2
 			|| data_counter[5] > 2)
 			clean_exit(game, DATA_ERROR);
-		data_recovery(game, skip(line_trimed), data_counter);
-		free(line_trimed);
+		data_recovery(game, skip(game->trim), data_counter);
+		free(game->trim);
+		game->trim = NULL;
 		line = get_next_line(game->fd);
 	}
 	free(line);
@@ -252,8 +252,8 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 		{
 			if (game->player.x != -1)
 				return(0);
-			game->player.y = line_nbr;
-			game->player.x = i;
+			game->player.y = line_nbr + 0.5;
+			game->player.x = i + 0.5;
 			game->map[line_nbr][i] = line[i];
 			game->direction_player = line[i];
 		}

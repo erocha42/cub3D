@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/28 17:11:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/30 16:17:08 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,18 @@
 
 void	init_game(t_game *game)
 {
+	game->mlx_ptr = NULL;
 	game->map = NULL;
+	game->player.y = -1;
 	game->player.x = -1;
 	game->map_height = 0;
+	game->map_width = 0;
 	game->fd = -1;
+	game->trim = NULL;
+	game->n_path = NULL;
+	game->s_path = NULL;
+	game->w_path = NULL;
+	game->e_path = NULL;
 }
 
 void    init_player_cam(t_game *game)
@@ -54,20 +62,14 @@ void    init_player_cam(t_game *game)
 
 static int	close_window(t_game *game)
 {
-	if (game->screen.img)
-		mlx_destroy_image(game->mlx_ptr, game->screen.img);
-	if (game->win_ptr)
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	mlx_destroy_display(game->mlx_ptr);
-	free(game->mlx_ptr);
-	exit(0);
+	clean_exit(game, NO_ERROR);
 	return (0);
 }
 
 static int	key_hook(int keycode, t_game *game)
 {
 	if (keycode == 65307)
-		close_window(game);
+		clean_exit(game, NO_ERROR);
 	return (0);
 }
 

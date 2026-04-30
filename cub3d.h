@@ -62,7 +62,7 @@ typedef struct s_game
 	int			map_height;
 	int			direction_player;
 	int 		fd;
-
+	char		*trim;
 	t_player	player;
 }				t_game;
 

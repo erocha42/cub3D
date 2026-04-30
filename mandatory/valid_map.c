@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:15:37 by erocha--          #+#    #+#             */
-/*   Updated: 2026/04/28 11:44:02 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/04/30 12:43:15 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,15 @@ static char	**map_cpy(t_game *game)
 static void	flood_fill(t_game *game, char **grid, int y, int x)
 {
 	if (y < 0 || x < 0 || y >= game->map_height - 1 || x >= game->map_width - 1)
+	{
+		free_tab(grid, game->map_height);
 		clean_exit(game, MAP_ERROR);
+	}
 	if (grid[y][x] == ' ' || grid[y][x] == '\0')
+	{
+		free_tab(grid, game->map_height);
 		clean_exit(game, MAP_ERROR);
+	}
 	grid[y][x] = 'X';
 	if (grid[y - 1][x] != '1' && grid[y - 1][x] != 'X')
 		flood_fill(game, grid, y - 1, x);

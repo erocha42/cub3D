@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/28 13:54:56 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/04/30 16:50:11 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	key_hook(int keycode, t_game *game)
 	double	OldDirX;
 	double	OldPlaneX;
 
-	MoveSpeed = 0.5;
-	RotSpeed = 0.3;
+	MoveSpeed = 0.3;
+	RotSpeed = 0.2;
 	if (keycode == 119)
 	{
 		if (game->map[(int)game->player.y][(int)(game->player.x
