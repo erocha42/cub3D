@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/30 16:41:38 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/04 15:59:26 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,8 @@ static void	mapper(t_game *game, char *first_line)
 		line = get_next_line(game->fd);
 	}
 	free(line);
+	if (game->player.x == -1)
+        clean_exit(game, MAP_ERROR);
 }
 
 // void	print_map(t_game *game)

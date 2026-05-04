@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:15:37 by erocha--          #+#    #+#             */
-/*   Updated: 2026/04/30 12:43:15 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/04 14:12:18 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static char	**map_cpy(t_game *game)
 	int		j;
 	char	**gridcpy;
 
-	gridcpy = malloc(game->map_height * sizeof(char *));
+	gridcpy = malloc((game->map_height + 1) * sizeof(char *));
 	if (!gridcpy)
 		clean_exit(game, MALLOC_ERROR);
 	i = 0;
 	while (i < game->map_height)
 	{
 		j = 0;
-		gridcpy[i] = malloc(game->map_width * sizeof(char));
+		gridcpy[i] = malloc((game->map_width + 1) * sizeof(char));
 		if (!gridcpy[i])
 			clean_exit(game, MALLOC_ERROR);
 		while (j < game->map_width)
@@ -33,8 +33,10 @@ static char	**map_cpy(t_game *game)
 			gridcpy[i][j] = game->map[i][j];
 			j++;
 		}
+		gridcpy[i][j] = '\0';
 		i++;
 	}
+	gridcpy[i] = NULL;
 	return (gridcpy);
 }
 
@@ -65,8 +67,23 @@ static void	flood_fill(t_game *game, char **grid, int y, int x)
 void	valid_map(t_game *game)
 {
 	char	**grid;
+	int		x;
+	int		y;
 
+	x = 0;
+	y = 0;
 	grid = map_cpy(game);
-	flood_fill(game, grid, (int)game->player.y, (int)game->player.x);
+	while (grid[y])
+	{
+		x = 0;
+		while (grid[y][x])
+		{
+			if (grid[y][x] == '0' || grid[y][x] == 'N' || grid[y][x] == 'S'
+				|| grid[y][x] == 'E' || grid[y][x] == 'W')
+				flood_fill(game, grid, y, x);
+			x++;
+		}
+		y++;
+	}
 	free_tab(grid, game->map_height);
 }

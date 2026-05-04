@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/30 16:17:08 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/04 14:58:09 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_game(t_game *game)
 	game->s_path = NULL;
 	game->w_path = NULL;
 	game->e_path = NULL;
+	game->direction_player = '\0';
 }
 
 void    init_player_cam(t_game *game)
