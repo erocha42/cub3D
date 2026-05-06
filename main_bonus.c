@@ -6,7 +6,7 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/06 16:39:32 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/06 16:45:59 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,32 +60,13 @@ static int	key_hook(int keycode, t_game *game)
 				* MoveSpeed)][(int)game->player.x] != '1')
 			game->player.y += game->player.dir_x * MoveSpeed;
 	}
-	if (keycode == 65363)
-	{
-		OldDirX = game->player.dir_x;
-		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			- game->player.dir_y * sin(RotSpeed);
-		game->player.dir_y = OldDirX * sin(RotSpeed) + game->player.dir_y
-			* cos(RotSpeed);
-		OldPlaneX = game->player.plane_x;
-		game->player.plane_x = game->player.plane_x * cos(RotSpeed)
-			- game->player.plane_y * sin(RotSpeed);
-		game->player.plane_y = OldPlaneX * sin(RotSpeed) + game->player.plane_y
-			* cos(RotSpeed);
-	}
-	if (keycode == 65361)
-	{
-		OldDirX = game->player.dir_x;
-		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			+ game->player.dir_y * sin(RotSpeed);
-		game->player.dir_y = -OldDirX * sin(RotSpeed) + game->player.dir_y
-			* cos(RotSpeed);
-		OldPlaneX = game->player.plane_x;
-		game->player.plane_x = game->player.plane_x * cos(RotSpeed)
-			+ game->player.plane_y * sin(RotSpeed);
-		game->player.plane_y = -OldPlaneX * sin(RotSpeed) + game->player.plane_y
-			* cos(RotSpeed);
-	}
+	raycasting(game);
+	return (0);
+}
+
+int game_loop(t_game *game)
+{
+	mouse_hook(game);
 	raycasting(game);
 	return (0);
 }
@@ -109,7 +90,7 @@ int	main(int ac, char *av[])
 		return (0);
 	if (init_images(&game) == 0)
 		return (0);
-	raycasting(&game);
+	mlx_loop_hook(game.mlx_ptr, game_loop, &game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_hook, &game);
 	mlx_loop(game.mlx_ptr);
 	clean_exit(&game, NO_ERROR);

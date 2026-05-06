@@ -61,7 +61,7 @@ typedef struct s_game
 	int			map_width;
 	int			map_height;
 	int			direction_player;
-	int 		fd;
+	int			fd;
 	char		*trim;
 	t_player	player;
 }				t_game;
@@ -77,5 +77,10 @@ int				raycasting(t_game *game);
 int				init_images(t_game *game);
 void			valid_map(t_game *game);
 void			init_player_cam(t_game *game);
+
+
+// BONUS :
+
+void			mouse_hook(t_game *game);
 
 #endif
