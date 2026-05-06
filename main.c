@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/30 16:50:11 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/06 16:12:51 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	key_hook(int keycode, t_game *game)
 		game->player.plane_y = -OldPlaneX * sin(RotSpeed) + game->player.plane_y
 			* cos(RotSpeed);
 	}
-	raycasting(game);
+	//raycasting(game);
 	return (0);
 }
 
@@ -111,6 +111,7 @@ int	main(int ac, char *av[])
 		return (0);
 	raycasting(&game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_hook, &game);
+	mlx_loop_hook(game.mlx_ptr, raycasting, &game);
 	mlx_loop(game.mlx_ptr);
 	clean_exit(&game, NO_ERROR);
 	return (1);
