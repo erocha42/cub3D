@@ -6,7 +6,7 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 15:28:39 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/06 15:32:01 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/06 16:42:16 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	minimap(t_game *game)
 
 	x = 1700;
 	y = 15;
-	while (y != 250)
+	while (y < 250)
 	{
-		while (x != 1900)
+		while (x < 1900)
 		{
 			my_mlx_pixel_put(game, x, y, game->ceiling_color);
 			x++;

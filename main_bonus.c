@@ -6,7 +6,7 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/06 15:49:16 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/06 16:39:32 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int	main(int ac, char *av[])
 	if (init_images(&game) == 0)
 		return (0);
 	raycasting(&game);
-	minimap(&game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_hook, &game);
 	mlx_loop(game.mlx_ptr);
 	clean_exit(&game, NO_ERROR);
