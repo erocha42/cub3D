@@ -39,6 +39,13 @@ typedef struct s_player
 	double		dir_y;
 	double		plane_x;
 	double		plane_y;
+	int			move_up;
+	int			move_down;
+	int			move_left;
+	int			move_right;
+	int			rotate_left;
+	int			rotate_right;
+	int			last_x;
 }				t_player;
 
 typedef struct s_game
@@ -73,11 +80,10 @@ void			clean_exit(t_game *game, t_error error_name);
 void			free_tab(char **tab, int limit);
 void			my_mlx_pixel_put(t_game *game, int x, int y, int color);
 void			minimap(t_game *game);
-int				raycasting(t_game *game);
+void			raycasting(t_game *game);
 int				init_images(t_game *game);
 void			valid_map(t_game *game);
 void			init_player_cam(t_game *game);
-
 
 // BONUS :
 

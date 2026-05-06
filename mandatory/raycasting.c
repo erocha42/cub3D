@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/06 16:13:48 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:13:35 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	get_tex_color(t_img *img, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-int	raycasting(t_game *game)
+void	raycasting(t_game *game)
 {
 	int x;
 	double cameraX;
@@ -170,5 +170,4 @@ int	raycasting(t_game *game)
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
-	return (1);
 }
