@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:19:57 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/05 14:35:57 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/06 18:25:19 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 void	mouse_hook(t_game *game)
 {
-	int		delta;
-	double	res;
 	int		x;
 	int		y;
+	int		delta;
+	double	res;
 	double	OldDirX;
 	double	OldPlaneX;
 
-	delta = 0;
-	res = 0;
-	x = 0;
-	y = 0;
-	mlx_mouse_hide(game->mlx_ptr, game->win_ptr);
 	mlx_mouse_get_pos(game->mlx_ptr, game->win_ptr, &x, &y);
-	delta = x - 960;
-	res = 0.005 * delta;
+	delta = x - game->player.last_x;
+	game->player.last_x = x;
+	if (delta == 0)
+		return ;
+	res = delta * 0.001;
 	OldDirX = game->player.dir_x;
 	game->player.dir_x = game->player.dir_x * cos(res) - game->player.dir_y
 		* sin(res);
@@ -38,5 +36,9 @@ void	mouse_hook(t_game *game)
 		- game->player.plane_y * sin(res);
 	game->player.plane_y = OldPlaneX * sin(res) + game->player.plane_y
 		* cos(res);
-	mlx_mouse_move(game->mlx_ptr, game->win_ptr, 960, 540);
+	if (x < 100 || x > 1800)
+	{
+		mlx_mouse_move(game->mlx_ptr, game->win_ptr, 960, 540);
+		game->player.last_x = 960;
+	}
 }

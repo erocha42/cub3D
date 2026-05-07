@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/04 14:58:09 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/06 18:21:10 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,45 @@ void	init_game(t_game *game)
 	game->w_path = NULL;
 	game->e_path = NULL;
 	game->direction_player = '\0';
+	game->direction_player = '\0';
+	game->player.move_down = 0;
+	game->player.move_left = 0;
+	game->player.move_right = 0;
+	game->player.move_up = 0;
+	game->player.rotate_left = 0;
+	game->player.rotate_right = 0;
 }
 
-void    init_player_cam(t_game *game)
+void	init_player_cam(t_game *game)
 {
-    if (game->direction_player == 'N')
-    {
-        game->player.dir_x = 0;
-        game->player.dir_y = -1;
-        game->player.plane_x = 0.66;
-        game->player.plane_y = 0;
-    }
-    else if (game->direction_player == 'S')
-    {
-        game->player.dir_x = 0;
-        game->player.dir_y = 1;
-        game->player.plane_x = -0.66;
-        game->player.plane_y = 0;
-    }
-    else if (game->direction_player == 'W')
-    {
-        game->player.dir_x = -1;
-        game->player.dir_y = 0;
-        game->player.plane_x = 0;
-        game->player.plane_y = -0.66;
-    }
-    else if (game->direction_player == 'E')
-    {
-        game->player.dir_x = 1;
-        game->player.dir_y = 0;
-        game->player.plane_x = 0;
-        game->player.plane_y = 0.66;
-    }
+	if (game->direction_player == 'N')
+	{
+		game->player.dir_x = 0;
+		game->player.dir_y = -1;
+		game->player.plane_x = 0.66;
+		game->player.plane_y = 0;
+	}
+	else if (game->direction_player == 'S')
+	{
+		game->player.dir_x = 0;
+		game->player.dir_y = 1;
+		game->player.plane_x = -0.66;
+		game->player.plane_y = 0;
+	}
+	else if (game->direction_player == 'W')
+	{
+		game->player.dir_x = -1;
+		game->player.dir_y = 0;
+		game->player.plane_x = 0;
+		game->player.plane_y = -0.66;
+	}
+	else if (game->direction_player == 'E')
+	{
+		game->player.dir_x = 1;
+		game->player.dir_y = 0;
+		game->player.plane_x = 0;
+		game->player.plane_y = 0.66;
+	}
 }
 
 static int	close_window(t_game *game)
