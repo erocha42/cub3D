@@ -68,19 +68,19 @@ typedef struct s_game
 
 int				init_mlx(t_game *game);
 void			init_game(t_game *game);
+int				color_recovery(t_game *game, char *line);
 void			parsing(char *av[], t_game *game);
 void			clean_exit(t_game *game, t_error error_name);
 void			free_tab(char **tab, int limit);
 void			my_mlx_pixel_put(t_game *game, int x, int y, int color);
-void			minimap(t_game *game);
 int				raycasting(t_game *game);
 int				init_images(t_game *game);
 void			valid_map(t_game *game);
 void			init_player_cam(t_game *game);
 
-
 // BONUS :
 
+void			minimap(t_game *game);
 void			mouse_hook(t_game *game);
 
 #endif

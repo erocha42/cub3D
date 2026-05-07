@@ -6,7 +6,7 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/06 16:45:59 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/06 16:49:39 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static int	key_hook(int keycode, t_game *game)
 {
 	double	MoveSpeed;
 	double	RotSpeed;
-	double	OldDirX;
-	double	OldPlaneX;
 
 	MoveSpeed = 0.3;
 	RotSpeed = 0.2;

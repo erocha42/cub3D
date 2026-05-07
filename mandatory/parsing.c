@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/04 15:59:26 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/06 18:11:28 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_strisdigits(char *str)
 	return (1);
 }
 
-static int	color_recovery(t_game *game, char *line)
+int	color_recovery(t_game *game, char *line)
 {
 	int		i;
 	int		color[3];
