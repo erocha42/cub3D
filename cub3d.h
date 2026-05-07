@@ -48,6 +48,13 @@ typedef struct s_player
 	int			last_x;
 }				t_player;
 
+typedef struct s_sprite
+{
+	double		x;
+	double		y;
+	int			texture;
+}				t_sprite;
+
 typedef struct s_game
 {
 	void		*mlx_ptr;
@@ -57,10 +64,12 @@ typedef struct s_game
 	char		*s_path;
 	char		*w_path;
 	char		*e_path;
+	char		*sprite_path;
 	t_img		tex_n;
 	t_img		tex_s;
 	t_img		tex_w;
 	t_img		tex_e;
+	t_img		tex_sprite;
 	int			ground_color;
 	int			ceiling_color;
 	char		**map;
@@ -70,7 +79,9 @@ typedef struct s_game
 	int			direction_player;
 	int			fd;
 	char		*trim;
+	double		z_buffer[1920];
 	t_player	player;
+	t_sprite	sprite;
 }				t_game;
 
 int				init_mlx(t_game *game);
@@ -90,5 +101,8 @@ void			init_player_cam(t_game *game);
 
 void			minimap(t_game *game);
 void			mouse_hook(t_game *game);
+void			update_sprite(t_game *game);
+void			render_sprite(t_game *game);
+int				get_tex_color(t_img *img, int x, int y);
 
 #endif

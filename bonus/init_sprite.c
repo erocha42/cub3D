@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:54:13 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/17 14:52:02 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/07 18:38:21 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,15 @@ int	init_images(t_game *game)
 	}
 	game->tex_w.addr = mlx_get_data_addr(game->tex_w.img, &game->tex_w.bpp,
 			&game->tex_w.line_len, &game->tex_w.endian);
+	game->tex_sprite.img = mlx_xpm_file_to_image(game->mlx_ptr, game->sprite_path,
+			&game->tex_sprite.width, &game->tex_sprite.height);
+	if (!game->tex_sprite.img)
+	{
+		clean_sprites(game);
+		return (0);
+	}
+	game->tex_sprite.addr = mlx_get_data_addr(game->tex_sprite.img,
+			&game->tex_sprite.bpp, &game->tex_sprite.line_len,
+			&game->tex_sprite.endian);
 	return (1);
 }

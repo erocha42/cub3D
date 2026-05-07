@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/06 18:13:11 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/07 18:46:57 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,12 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 			game->player.x = i + 0.5;
 			game->map[line_nbr][i] = line[i];
 			game->direction_player = line[i];
+		}
+		else if (line[i] == 'M')
+		{
+			game->sprite.x = i + 0.5;
+			game->sprite.y = line_nbr + 0.5;
+			game->map[line_nbr][i] = '0';
 		}
 		else if (!ft_isprint(line[i]))
 			game->map[line_nbr][i] = ' ';

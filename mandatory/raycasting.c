@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 16:10:53 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/07 18:47:06 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	raycasting(t_game *game)
 	int DrawEnd;
 	int y;
 	int color;
-	int texNum;
 	double wallX;
 	int texX;
 	double step;
@@ -123,7 +122,6 @@ void	raycasting(t_game *game)
 		DrawEnd = lineHeight / 2 + 1080 / 2;
 		if (DrawEnd >= 1080)
 			DrawEnd = 1080 - 1;
-		texNum = game->map[mapY][mapX] - 1;
 		if (side == 0)
 			wallX = game->player.y + perpWallDist * rayDirY;
 		else
