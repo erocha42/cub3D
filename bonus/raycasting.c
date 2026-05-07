@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 18:47:02 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/07 18:52:25 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	get_tex_color(t_img *img, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-int	raycasting(t_game *game)
+void	raycasting(t_game *game)
 {
 	int x;
 	double cameraX;
@@ -167,12 +167,7 @@ int	raycasting(t_game *game)
 		}
 		x++;
 	}
-<<<<<<< HEAD
-	minimap(game);
-=======
 	render_sprite(game);
->>>>>>> 3a87077 (add sprite with texture)
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
-	return (1);
 }

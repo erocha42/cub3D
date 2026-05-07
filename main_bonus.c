@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 18:46:49 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/07 18:50:52 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	game_loop(t_game *game)
 {
 	double	MoveSpeed;
 	double	RotSpeed;
+	double	OldDirX;
+	double  OldPlaneX;
 
 	MoveSpeed = 0.1;
 	RotSpeed = 0.1;
