@@ -6,39 +6,45 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 16:41:30 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/15 13:07:24 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 16:05:20 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	heatmap(t_game *game)
+static void	check_node(t_game *game, int *q, int *last, int n_c[3])
 {
-	int	i;
-	int	j;
+	int	cur_val;
 
-	i = 0;
-	game->heatmap = malloc(sizeof(int *) * game->map_height);
-	if (!game->heatmap)
-		return ;
-	while (i < game->map_height)
+	if (n_c[0] >= 0 && n_c[0] < game->map_width && n_c[1] >= 0
+		&& n_c[1] < game->map_height)
 	{
-		j = 0;
-		game->heatmap[i] = malloc(sizeof(int) * game->map_width);
-		if (!game->heatmap[i])
+		if (game->heatmap[n_c[1]][n_c[0]] == -1)
 		{
-			free_tab_int(game->heatmap, i);
-			return ;
+			cur_val = game->heatmap[n_c[2] / game->map_width][n_c[2]
+				% game->map_width];
+			game->heatmap[n_c[1]][n_c[0]] = cur_val + 1;
+			q[*last] = n_c[1] * game->map_width + n_c[0];
+			*last += 1;
 		}
-		while (j < game->map_width)
-		{
-			if (is_walkable(game, j, i) == 1)
-				game->heatmap[i][j++] = -1;
-			else
-				game->heatmap[i][j++] = -2;
-		}
-		i++;
 	}
+}
+
+static void	expand_node(t_game *game, int *q, int *last, int current)
+{
+	int	n_c[3];
+
+	n_c[2] = current;
+	n_c[0] = (current % game->map_width) + 1;
+	n_c[1] = current / game->map_width;
+	check_node(game, q, last, n_c);
+	n_c[0] = (current % game->map_width) - 1;
+	check_node(game, q, last, n_c);
+	n_c[0] = current % game->map_width;
+	n_c[1] = (current / game->map_width) + 1;
+	check_node(game, q, last, n_c);
+	n_c[1] = (current / game->map_width) - 1;
+	check_node(game, q, last, n_c);
 }
 
 void	bfs(t_game *game)
@@ -46,13 +52,6 @@ void	bfs(t_game *game)
 	int	*queue;
 	int	first;
 	int	last;
-	int	cur_x;
-	int	cur_y;
-	int	i;
-	int	dir_x[4] = {1, -1, 0, 0};
-	int	dir_y[4] = {0, 0, 1, -1};
-	int	new_x;
-	int	new_y;
 
 	first = 0;
 	last = 0;
@@ -66,59 +65,38 @@ void	bfs(t_game *game)
 	last++;
 	while (first < last)
 	{
-		cur_x = queue[first] % game->map_width;
-		cur_y = queue[first] / game->map_width;
-		i = 0;
-		while (i < 4)
-		{
-			new_x = cur_x + dir_x[i];
-			new_y = cur_y + dir_y[i];
-			if (new_x >= 0 && new_x < game->map_width && new_y >= 0
-				&& new_y < game->map_height)
-			{
-				if (game->heatmap[new_y][new_x] == -1)
-				{
-					game->heatmap[new_y][new_x] = game->heatmap[cur_y][cur_x]
-						+ 1;
-					queue[last++] = new_y * game->map_width + new_x;
-				}
-			}
-			i++;
-		}
+		expand_node(game, queue, &last, queue[first]);
 		first++;
+	}
+	free(queue);
+}
+
+static void	check_step(t_game *game, int nx, int ny, int state[3])
+{
+	if (nx >= 0 && nx < game->map_width && ny >= 0 && ny < game->map_height)
+	{
+		if (game->heatmap[ny][nx] >= 0 && game->heatmap[ny][nx] < state[0])
+		{
+			state[0] = game->heatmap[ny][nx];
+			state[1] = nx;
+			state[2] = ny;
+		}
 	}
 }
 
-void	get_next_step(t_game *game, int mx, int my, int *tx, int *ty)
+void	get_next_step(t_game *game, int mx, int my, int *t_xy)
 {
-	int	dir_x[4] = {1, -1, 0, 0};
-	int	dir_y[4] = {0, 0, 1, -1};
-	int	new_x;
-	int	new_y;
-	int	i;
-	int	min_dist;
+	int	state[3];
 
-	min_dist = INT_MAX;
-	*tx = mx;
-	*ty = my;
+	state[0] = INT_MAX;
+	state[1] = mx;
+	state[2] = my;
 	if (!game->heatmap)
 		return ;
-	i = 0;
-	while (i < 4)
-	{
-		new_x = mx + dir_x[i];
-		new_y = my + dir_y[i];
-		if (new_x >= 0 && new_x < game->map_width && new_y >= 0
-			&& new_y < game->map_height)
-		{
-			if (game->heatmap[new_y][new_x] >= 0
-				&& game->heatmap[new_y][new_x] < min_dist)
-			{
-				min_dist = game->heatmap[new_y][new_x];
-				*tx = new_x;
-				*ty = new_y;
-			}
-		}
-		i++;
-	}
+	check_step(game, mx + 1, my, state);
+	check_step(game, mx - 1, my, state);
+	check_step(game, mx, my + 1, state);
+	check_step(game, mx, my - 1, state);
+	t_xy[0] = state[1];
+	t_xy[1] = state[2];
 }

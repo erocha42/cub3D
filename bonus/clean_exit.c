@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/15 13:07:22 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 16:04:36 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	error_name_handling(t_error error_name)
 	exit(1);
 }
 
-void	clean_exit2(t_game *game)
+static void	clean_exit2(t_game *game)
 {
 	if (game->trim)
 		free(game->trim);

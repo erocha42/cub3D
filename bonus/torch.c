@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 14:23:16 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/15 13:12:14 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 16:04:24 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	render_torch(t_game *game)
 	int		color;
 	double	intensity;
 
-	y = 0;
-	while (y < 1080)
+	y = -1;
+	while (++y < 1080)
 	{
 		x = 0;
 		while (x < 1920)
@@ -54,6 +54,5 @@ void	render_torch(t_game *game)
 			}
 			x++;
 		}
-		y++;
 	}
 }
