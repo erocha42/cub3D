@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 18:50:52 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/08 14:13:34 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	main(int ac, char *av[])
 	}
 	init_game(&game);
 	parsing(av, &game);
-	game.sprite_path = "./sprites/matis.xpm";
+	game.sprite_path = "./sprites/gmt.xpm";
 	init_player_cam(&game);
 	if (init_mlx(&game) == 0)
 		return (0);

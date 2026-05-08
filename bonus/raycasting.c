@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 18:52:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/08 14:35:14 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ void	raycasting(t_game *game)
 		x++;
 	}
 	render_sprite(game);
+	render_torch(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
 }

@@ -104,5 +104,7 @@ void			mouse_hook(t_game *game);
 void			update_sprite(t_game *game);
 void			render_sprite(t_game *game);
 int				get_tex_color(t_img *img, int x, int y);
+void			render_torch(t_game *game);
+void			free_tab_int(int **tab, int limit);
 
 #endif

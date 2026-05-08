@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 18:46:57 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/08 16:50:53 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,18 +310,6 @@ static void	mapper(t_game *game, char *first_line)
         clean_exit(game, MAP_ERROR);
 }
 
-// void	print_map(t_game *game)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < game->map_height)
-// 	{
-// 		printf("%s\n", game->map[i]);
-// 		i++;
-// 	}
-// }
-
 void	parsing(char *av[], t_game *game)
 {
 	int	len;
@@ -336,6 +324,5 @@ void	parsing(char *av[], t_game *game)
 	data_handling(game);
 	mapper(game, search_map(game));
 	valid_map(game);
-	// print_map(game);
 	close(game->fd);
 }

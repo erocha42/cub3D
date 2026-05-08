@@ -34,7 +34,9 @@ BONUS_SRC   = 	main_bonus.c \
 				bonus/valid_map.c \
 				bonus/clean_exit.c \
 				bonus/mouse_hook.c \
-				bonus/sprite.c
+				bonus/sprite.c \
+				bonus/torch.c \
+				bonus/BFS.c 
 
 OBJ         = $(SRC:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJ   = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)
