@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/07 17:43:48 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/12 16:43:49 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ void	clean_exit(t_game *game, t_error error_name)
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);
 	}
+	ma_sound_uninit(&game->monster_sound);
+    ma_engine_uninit(&game->audio_engine);
 	error_name_handling(error_name);
 }

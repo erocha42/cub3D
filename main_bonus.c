@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/08 14:13:34 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:15:38 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	key_press(int keycode, t_game *game)
 		game->player.rotate_left = 1;
 	if (keycode == 65361)
 		game->player.rotate_right = 1;
+	if (keycode == 65505)
+		game->player.sprint = 1;
 	return (0);
 }
 
@@ -45,6 +47,8 @@ static int	key_release(int keycode, t_game *game)
 		game->player.rotate_left = 0;
 	if (keycode == 65361)
 		game->player.rotate_right = 0;
+	if (keycode == 65505)
+		game->player.sprint = 0;
 	return (0);
 }
 
@@ -53,9 +57,11 @@ int	game_loop(t_game *game)
 	double	MoveSpeed;
 	double	RotSpeed;
 	double	OldDirX;
-	double  OldPlaneX;
+	double	OldPlaneX;
 
 	MoveSpeed = 0.1;
+	if (game->player.sprint == 1)
+		MoveSpeed = 0.18;
 	RotSpeed = 0.1;
 	if (game->player.move_up == 1)
 	{
@@ -138,15 +144,13 @@ int	main(int ac, char *av[])
 		return (0);
 	}
 	init_game(&game);
-	parsing(av, &game);
-	game.sprite_path = "./sprites/gmt.xpm";
+	parsing(av, &game);;
 	init_player_cam(&game);
 	if (init_mlx(&game) == 0)
 		return (0);
 	if (init_images(&game) == 0)
 		return (0);
-	game.sprite.x = 3;
-	game.sprite.y = 3;
+	init_audio(&game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win_ptr, 3, 1L << 1, key_release, &game);
 	mlx_mouse_hide(game.mlx_ptr, game.win_ptr);

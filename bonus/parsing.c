@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/08 16:50:53 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/12 15:31:35 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,8 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 		}
 		else if (line[i] == 'M')
 		{
+			if (game->sprite.x != -1)
+				return(0);
 			game->sprite.x = i + 0.5;
 			game->sprite.y = line_nbr + 0.5;
 			game->map[line_nbr][i] = '0';

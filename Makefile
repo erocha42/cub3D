@@ -7,7 +7,7 @@ INCLUDES    = -I. -I./minilibx-linux -I./get_next_line
 
 LIBFT       = ./libft/libft.a
 MLX         = ./minilibx-linux/libmlx.a
-MLX_FLAGS   = -L./minilibx-linux -lmlx -lXext -lX11 -lm -lz
+MLX_FLAGS   = -L./minilibx-linux -lmlx -lXext -lX11 -lm -lz -lpthread -ldl
 
 OBJ_DIR     = 	obj
 
@@ -36,7 +36,8 @@ BONUS_SRC   = 	main_bonus.c \
 				bonus/mouse_hook.c \
 				bonus/sprite.c \
 				bonus/torch.c \
-				bonus/BFS.c 
+				bonus/BFS.c \
+				bonus/audio.c
 
 OBJ         = $(SRC:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJ   = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 17:54:01 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 18:30:44 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:20:58 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,54 @@ void	update_sprite(t_game *game)
 	double	StepY;
 	double	Old_X;
 	double	Old_Y;
+	int		tx;
+	int		ty;
+	double	target_x;
+	double	target_y;
+	float	volume;
 
+	tx = 0;
+	ty = 0;
 	Old_X = game->sprite.x;
 	Old_Y = game->sprite.y;
 	Dist = sqrt(pow(game->player.x - game->sprite.x, 2) + pow(game->player.y
 				- game->sprite.y, 2));
-	if (Dist < 0.5)
+	if (Dist < 0.3)
 	{
 		printf("GAME OVER\n");
 		clean_exit(game, NO_ERROR);
 	}
-	StepX = ((game->player.x - game->sprite.x) / Dist) * 0.02;
-	StepY = ((game->player.y - game->sprite.y) / Dist) * 0.02;
-	game->sprite.x += StepX;
-	game->sprite.y += StepY;
+	if (Dist > 15.0)
+		volume = 0.0f;
+	else
+		volume = 1.0f - (Dist / 15.0);
+	if (volume < 0.0f)
+		volume = 0.0f;
+	if (volume > 1.0f)
+		volume = 1.0f;
+	if (game->has_audio == 1)
+		ma_sound_set_volume(&game->monster_sound, volume);
+	if ((int)game->sprite.x == (int)game->player.x
+		&& (int)game->sprite.y == (int)game->player.y)
+	{
+		target_x = game->player.x;
+		target_y = game->player.y;
+	}
+	else
+	{
+		get_next_step(game, (int)game->sprite.x, (int)game->sprite.y, &tx, &ty);
+		target_x = tx + 0.5;
+		target_y = ty + 0.5;
+	}
+	Dist = sqrt(pow(target_x - game->sprite.x, 2) + pow(target_y
+				- game->sprite.y, 2));
+	if (Dist > 0.05)
+	{
+		StepX = ((target_x)-game->sprite.x) / Dist * 0.05;
+		StepY = ((target_y)-game->sprite.y) / Dist * 0.05;
+		game->sprite.x += StepX;
+		game->sprite.y += StepY;
+	}
 }
 
 void	render_sprite(t_game *game)

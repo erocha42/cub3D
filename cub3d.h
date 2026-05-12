@@ -3,8 +3,10 @@
 
 # include "getnextline/get_next_line.h"
 # include "libft/libft.h"
+# include "miniaudio.h"
 # include "minilibx-linux/mlx.h"
 # include <fcntl.h>
+# include <limits.h>
 # include <math.h>
 # include <stdio.h>
 # include <sys/time.h>
@@ -46,6 +48,7 @@ typedef struct s_player
 	int			rotate_left;
 	int			rotate_right;
 	int			last_x;
+	int			sprint;
 }				t_player;
 
 typedef struct s_sprite
@@ -82,6 +85,9 @@ typedef struct s_game
 	double		z_buffer[1920];
 	t_player	player;
 	t_sprite	sprite;
+	ma_engine	audio_engine;
+	ma_sound	monster_sound;
+	int			has_audio;
 }				t_game;
 
 int				init_mlx(t_game *game);
@@ -106,5 +112,7 @@ void			render_sprite(t_game *game);
 int				get_tex_color(t_img *img, int x, int y);
 void			render_torch(t_game *game);
 void			free_tab_int(int **tab, int limit);
+void			get_next_step(t_game *game, int mx, int my, int *tx, int *ty);
+void			init_audio(t_game *game);
 
 #endif
