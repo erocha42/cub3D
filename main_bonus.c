@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 15:53:52 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 19:07:25 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,8 @@ int	main(int ac, char *av[])
 		return (0);
 	}
 	init_game(&game);
-	parsing(av, &game);;
+	parsing(av, &game);
+	doors(&game);
 	init_player_cam(&game);
 	if (init_mlx(&game) == 0)
 		return (0);
