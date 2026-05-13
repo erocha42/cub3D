@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/04/30 15:50:38 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 15:04:38 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static void	error_name_handling(t_error error_name)
 	if (error_name == NO_ERROR)
 		exit(0);
 	if (error_name == MALLOC_ERROR)
-		ft_putstr_fd("Error: Malloc Error\n", 2);
+		ft_putstr_fd("Error:\n Malloc Error\n", 2);
 	if (error_name == MAP_ERROR)
-		ft_putstr_fd("Error: Wrong Map\n", 2);
+		ft_putstr_fd("Error:\n Wrong Map\n", 2);
 	if (error_name == EXTD_ERROR)
-		ft_putstr_fd("Error: Wrong Extension\n", 2);
+		ft_putstr_fd("Error:\n Wrong Extension\n", 2);
 	if (error_name == FD_ERROR)
-		ft_putstr_fd("Error: Wrong FD\n", 2);
+		ft_putstr_fd("Error:\n Wrong FD\n", 2);
 	if (error_name == DATA_ERROR)
-		ft_putstr_fd("Error: Data Error In .Cub File\n", 2);
+		ft_putstr_fd("Error:\n Data Error In .Cub File\n", 2);
 	exit(1);
 }
 

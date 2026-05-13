@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:54:13 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/07 18:38:21 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:44:29 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ void	clean_sprites(t_game *game)
 	{
 		mlx_destroy_image(game->mlx_ptr, game->tex_w.img);
 		game->tex_w.img = NULL;
+	}
+	if (game->tex_sprite.img)
+	{
+		mlx_destroy_image(game->mlx_ptr, game->tex_sprite.img);
+		game->tex_sprite.img = NULL;
+	}
+	if (game->sky_img.img)
+	{
+		mlx_destroy_image(game->mlx_ptr, game->sky_img.img);
+		game->sky_img.img = NULL;
 	}
 }
 
@@ -74,8 +84,9 @@ int	init_images(t_game *game)
 	}
 	game->tex_w.addr = mlx_get_data_addr(game->tex_w.img, &game->tex_w.bpp,
 			&game->tex_w.line_len, &game->tex_w.endian);
-	game->tex_sprite.img = mlx_xpm_file_to_image(game->mlx_ptr, game->sprite_path,
-			&game->tex_sprite.width, &game->tex_sprite.height);
+	game->tex_sprite.img = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->sprite_path, &game->tex_sprite.width,
+			&game->tex_sprite.height);
 	if (!game->tex_sprite.img)
 	{
 		clean_sprites(game);
@@ -84,5 +95,11 @@ int	init_images(t_game *game)
 	game->tex_sprite.addr = mlx_get_data_addr(game->tex_sprite.img,
 			&game->tex_sprite.bpp, &game->tex_sprite.line_len,
 			&game->tex_sprite.endian);
+	game->sky_img.img = mlx_xpm_file_to_image(game->mlx_ptr,
+			"./sprites/sky.xpm", &game->sky_img.width, &game->sky_img.height);
+	if (!game->tex_sprite.img)
+		clean_exit(game, NO_ERROR);
+	game->sky_img.addr = mlx_get_data_addr(game->sky_img.img,
+			&game->sky_img.bpp, &game->sky_img.line_len, &game->sky_img.endian);
 	return (1);
 }

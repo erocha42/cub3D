@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/12 16:12:27 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 15:43:07 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void	init_game(t_game *game)
 	game->player.rotate_left = 0;
 	game->player.rotate_right = 0;
 	game->player.sprint = 0;
+	game->player.torch = 0;
 	game->sprite.y = -1;
 	game->sprite.x = -1;
 	game->sprite_path = "./sprites/paco.xpm";
+	game->heatmap = NULL;
 }
 
 void	init_player_cam(t_game *game)

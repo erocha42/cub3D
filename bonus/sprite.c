@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 17:54:01 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/12 17:20:58 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 15:24:56 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,35 @@
 
 void	update_sprite(t_game *game)
 {
-	double	Dist;
+	double	dist_euclid;
+	double	dist_target;
 	double	StepX;
 	double	StepY;
-	double	Old_X;
-	double	Old_Y;
 	int		tx;
 	int		ty;
 	double	target_x;
 	double	target_y;
 	float	volume;
+	int		bfs_dist;
 
 	tx = 0;
 	ty = 0;
-	Old_X = game->sprite.x;
-	Old_Y = game->sprite.y;
-	Dist = sqrt(pow(game->player.x - game->sprite.x, 2) + pow(game->player.y
-				- game->sprite.y, 2));
-	if (Dist < 0.3)
+	dist_euclid = sqrt(pow(game->player.x - game->sprite.x, 2)
+			+ pow(game->player.y - game->sprite.y, 2));
+	if (dist_euclid < 0.3)
 	{
 		printf("GAME OVER\n");
 		clean_exit(game, NO_ERROR);
 	}
-	if (Dist > 15.0)
+	if (game->heatmap)
+		free_tab_int(game->heatmap, game->map_height);
+	heatmap(game);
+	bfs(game);
+	bfs_dist = game->heatmap[(int)game->sprite.y][(int)game->sprite.x];
+	if (bfs_dist > 15 || bfs_dist < 0)
 		volume = 0.0f;
 	else
-		volume = 1.0f - (Dist / 15.0);
+		volume = 1.0f - ((float)bfs_dist / 15.0f);
 	if (volume < 0.0f)
 		volume = 0.0f;
 	if (volume > 1.0f)
@@ -58,12 +61,12 @@ void	update_sprite(t_game *game)
 		target_x = tx + 0.5;
 		target_y = ty + 0.5;
 	}
-	Dist = sqrt(pow(target_x - game->sprite.x, 2) + pow(target_y
+	dist_target = sqrt(pow(target_x - game->sprite.x, 2) + pow(target_y
 				- game->sprite.y, 2));
-	if (Dist > 0.05)
+	if (dist_target > 0.05)
 	{
-		StepX = ((target_x)-game->sprite.x) / Dist * 0.05;
-		StepY = ((target_y)-game->sprite.y) / Dist * 0.05;
+		StepX = ((target_x)-game->sprite.x) / dist_target * 0.05;
+		StepY = ((target_y)-game->sprite.y) / dist_target * 0.05;
 		game->sprite.x += StepX;
 		game->sprite.y += StepY;
 	}

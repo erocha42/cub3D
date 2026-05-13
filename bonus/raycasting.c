@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/08 14:35:14 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:43:46 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,41 @@ int	get_tex_color(t_img *img, int x, int y)
 
 void	raycasting(t_game *game)
 {
-	int x;
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
-	int mapX;
-	int mapY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int stepX;
-	int stepY;
-	int hit;
-	int side;
-	int lineHeight;
-	int DrawStart;
-	int DrawEnd;
-	int y;
-	int color;
-	double wallX;
-	int texX;
-	double step;
-	int texY;
-	double texPos;
+	int		x;
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	int		mapX;
+	int		mapY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		side;
+	int		lineHeight;
+	int		DrawStart;
+	int		DrawEnd;
+	int		y;
+	int		color;
+	double	wallX;
+	int		texX;
+	double	step;
+	int		texY;
+	double	texPos;
+	double	player_angle;
+	int		sky_offset_x;
+	int		sky_texX;
+	int		sky_texY;
 
 	x = 0;
+	player_angle = atan2(game->player.dir_y, game->player.dir_x);
+	if (player_angle < 0)
+		player_angle += 2 * M_PI;
+	sky_offset_x = (int)((player_angle / (2 * M_PI)) * game->sky_img.width);
 	while (x < 1920)
 	{
 		cameraX = 2 * x / (double)1920 - 1;
@@ -138,7 +146,10 @@ void	raycasting(t_game *game)
 		y = 0;
 		while (y < DrawStart)
 		{
-			my_mlx_pixel_put(game, x, y, game->ceiling_color);
+			sky_texX = (sky_offset_x + x) % game->sky_img.width;
+			sky_texY = (y * game->sky_img.height) / (1080 / 2);
+			color = get_tex_color(&game->sky_img, sky_texX, sky_texY);
+			my_mlx_pixel_put(game, x, y, color);
 			y++;
 		}
 		while (y <= DrawEnd)
@@ -168,7 +179,8 @@ void	raycasting(t_game *game)
 		x++;
 	}
 	render_sprite(game);
-	render_torch(game);
+	if (game->player.torch == 0)
+		render_torch(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
 }
