@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:54:13 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 18:22:31 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:59:42 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ int	init_images(t_game *game)
 		clean_exit(game, NO_ERROR);
 	game->tex_w.addr = mlx_get_data_addr(game->tex_w.img, &game->tex_w.bpp,
 			&game->tex_w.line_len, &game->tex_w.endian);
-	game->tex_sprite.img = mlx_xpm_file_to_image(game->mlx_ptr, game->sprite_path,
-			&game->tex_sprite.width, &game->tex_sprite.height);
+	game->tex_sprite.img = mlx_xpm_file_to_image(game->mlx_ptr,
+			game->sprite_path, &game->tex_sprite.width,
+			&game->tex_sprite.height);
 	if (!game->tex_sprite.img)
 	{
 		clean_sprites(game);
@@ -72,12 +73,15 @@ int	init_images(t_game *game)
 	game->tex_sprite.addr = mlx_get_data_addr(game->tex_sprite.img,
 			&game->tex_sprite.bpp, &game->tex_sprite.line_len,
 			&game->tex_sprite.endian);
-	game->tex_d.img = mlx_xpm_file_to_image(game->mlx_ptr, "./sprites/Door-6.xpm",
-			&game->tex_d.width, &game->tex_d.height);
+	game->tex_d.img = mlx_xpm_file_to_image(game->mlx_ptr,
+			"./sprites/Door-6.xpm", &game->tex_d.width, &game->tex_d.height);
 	if (!game->tex_d.img)
 		clean_exit(game, NO_ERROR);
 	game->tex_d.addr = mlx_get_data_addr(game->tex_d.img, &game->tex_d.bpp,
 			&game->tex_d.line_len, &game->tex_d.endian);
-	printf("tex_d: width=%d height=%d\n", game->tex_d.width, game->tex_d.height);
+	printf("tex_d: width=%d height=%d\n", game->tex_d.width,
+		game->tex_d.height);
+	game->tex_w.addr = mlx_get_data_addr(game->tex_w.img, &game->tex_w.bpp,
+			&game->tex_w.line_len, &game->tex_w.endian);
 	return (1);
 }
