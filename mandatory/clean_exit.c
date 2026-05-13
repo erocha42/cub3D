@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/04/30 15:50:38 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 15:18:42 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	error_name_handling(t_error error_name)
 		ft_putstr_fd("Error: Wrong FD\n", 2);
 	if (error_name == DATA_ERROR)
 		ft_putstr_fd("Error: Data Error In .Cub File\n", 2);
+	if (error_name == IMG_ERROR)
+		ft_putstr_fd("Error: IMG error)\n", 2);
 	exit(1);
 }
 
@@ -57,18 +59,7 @@ void	clean_exit(t_game *game, t_error error_name)
 		free(game->trim);
 	if (game->mlx_ptr)
 	{
-		if (game->tex_e.img)
-			mlx_destroy_image(game->mlx_ptr, game->tex_e.img);
-		if (game->tex_w.img)
-			mlx_destroy_image(game->mlx_ptr, game->tex_w.img);
-		if (game->tex_s.img)
-			mlx_destroy_image(game->mlx_ptr, game->tex_s.img);
-		if (game->tex_n.img)
-			mlx_destroy_image(game->mlx_ptr, game->tex_n.img);
-		if (game->screen.img)
-			mlx_destroy_image(game->mlx_ptr, game->screen.img);
-		if (game->win_ptr)
-			mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+		clean_sprites(game);
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);
 	}

@@ -19,7 +19,8 @@ typedef enum e_error
 	FD_ERROR,
 	MALLOC_ERROR,
 	MAP_ERROR,
-	DATA_ERROR
+	DATA_ERROR,
+	IMG_ERROR
 }				t_error;
 
 typedef struct s_img
@@ -58,6 +59,13 @@ typedef struct s_sprite
 	int			texture;
 }				t_sprite;
 
+typedef	struct	s_doors
+{
+	int	x;
+	int	y;
+	int	state;
+}				t_doors;
+
 typedef struct s_game
 {
 	void		*mlx_ptr;
@@ -73,9 +81,14 @@ typedef struct s_game
 	t_img		tex_w;
 	t_img		tex_e;
 	t_img		tex_sprite;
+	t_img		tex_d;
 	int			ground_color;
 	int			ceiling_color;
 	char		**map;
+	t_doors		*doors;
+	int			nb_doors;
+	int			cam_x;
+	int			cam_y;
 	char		*map_path;
 	int			map_width;
 	int			map_height;
@@ -94,11 +107,12 @@ int				init_mlx(t_game *game);
 void			init_game(t_game *game);
 int				color_recovery(t_game *game, char *line);
 void			parsing(char *av[], t_game *game);
+void			clean_sprites(t_game *game);
 void			clean_exit(t_game *game, t_error error_name);
 void			free_tab(char **tab, int limit);
 void			my_mlx_pixel_put(t_game *game, int x, int y, int color);
 void			minimap(t_game *game);
-void			raycasting(t_game *game);
+int				raycasting(t_game *game);
 int				init_images(t_game *game);
 void			valid_map(t_game *game);
 void			init_player_cam(t_game *game);
@@ -114,5 +128,7 @@ void			render_torch(t_game *game);
 void			free_tab_int(int **tab, int limit);
 void			get_next_step(t_game *game, int mx, int my, int *tx, int *ty);
 void			init_audio(t_game *game);
+void			doors(t_game *game);
+
 
 #endif

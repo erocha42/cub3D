@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/12 17:15:38 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:25:11 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,8 @@ int	main(int ac, char *av[])
 		return (0);
 	}
 	init_game(&game);
-	parsing(av, &game);;
+	parsing(av, &game);
+	doors(&game);
 	init_player_cam(&game);
 	if (init_mlx(&game) == 0)
 		return (0);

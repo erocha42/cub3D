@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/08 16:51:06 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:41:08 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,7 +301,7 @@ static void	mapper(t_game *game, char *first_line)
 	}
 	free(line);
 	if (game->player.x == -1)
-        clean_exit(game, MAP_ERROR);
+		clean_exit(game, MAP_ERROR);
 }
 
 void	parsing(char *av[], t_game *game)

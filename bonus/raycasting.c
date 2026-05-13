@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/08 14:35:14 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:26:23 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,24 @@ int	get_tex_color(t_img *img, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-void	raycasting(t_game *game)
+static	int door_idx(t_game *game, int x, int y)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->nb_doors)
+	{
+		if (game->doors[i].x == x && game->doors[i].y == y)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	raycasting(t_game *game)
 {
 	int x;
+	int	idx;
 	double cameraX;
 	double rayDirX;
 	double rayDirY;
@@ -42,9 +57,11 @@ void	raycasting(t_game *game)
 	double deltaDistX;
 	double deltaDistY;
 	double perpWallDist;
+	double	distCenter;
 	int stepX;
 	int stepY;
 	int hit;
+	double	hitPos;
 	int side;
 	int lineHeight;
 	int DrawStart;
@@ -110,12 +127,39 @@ void	raycasting(t_game *game)
 			}
 			if (game->map[mapY][mapX] == '1')
 				hit = 1;
+			if (game->map[mapY][mapX] == 'D')
+			{
+				idx = door_idx(game, mapX, mapY);
+				if (idx != -1 && game->doors[idx].state == 1)
+					continue ;
+				hit = 1;
+			}
 		}
 		if (side == 0)
 			perpWallDist = (sideDistX - deltaDistX);
 		else
 			perpWallDist = (sideDistY - deltaDistY);
 		game->z_buffer[x] = perpWallDist;
+			perpWallDist = sideDistX - deltaDistX;
+		if (side == 1)
+			perpWallDist = sideDistY - deltaDistY;
+		idx = door_idx(game, mapX, mapY);
+		if (game->map[mapY][mapX] == 'D' && idx != -1 && game->doors[idx].state == 0)
+		{
+			if (side == 0)
+			{
+				distCenter = perpWallDist + deltaDistX;
+				hitPos = game->player.y + distCenter * rayDirY;
+			}
+			if (side == 1)
+			{
+				distCenter = perpWallDist + deltaDistY;
+				hitPos = game->player.x + distCenter * rayDirX;
+			}
+			hitPos -= floor(hitPos);
+			if (hitPos >= 0.0 && hitPos <= 1.0)
+				perpWallDist = distCenter;
+		}
 		lineHeight = (int)(1080 / perpWallDist);
 		DrawStart = (lineHeight * -1) / 2 + 1080 / 2;
 		if (DrawStart < 0)
@@ -129,10 +173,13 @@ void	raycasting(t_game *game)
 			wallX = game->player.x + perpWallDist * rayDirX;
 		wallX -= floor(wallX);
 		texX = (int)(wallX * 64);
-		if (side == 0 && rayDirX > 0)
-			texX = 64 - texX - 1;
-		if (side == 1 && rayDirY < 0)
-			texX = 64 - texX - 1;
+		if (game->map[mapY][mapX] != 'D')
+		{
+			if (side == 0 && rayDirX > 0)
+				texX = 64 - texX - 1;
+			if (side == 1 && rayDirY < 0)
+				texX = 64 - texX - 1;
+		}
 		step = 1.0 * 64 / lineHeight;
 		texPos = (DrawStart - 1080 / 2.0 + lineHeight / 2.0) * step;
 		y = 0;
@@ -149,7 +196,9 @@ void	raycasting(t_game *game)
 			else if (texY >= 64)
 				texY = 64 - 1;
 			texPos += step;
-			if (side == 0 && rayDirX > 0)
+			if (game->map[mapY][mapX] == 'D')
+				color = get_tex_color(&game->tex_d, texX, texY);
+			else if (side == 0 && rayDirX > 0)
 				color = get_tex_color(&game->tex_e, texX, texY);
 			else if (side == 0 && rayDirX < 0)
 				color = get_tex_color(&game->tex_w, texX, texY);
@@ -171,4 +220,5 @@ void	raycasting(t_game *game)
 	render_torch(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
+	return (1);
 }

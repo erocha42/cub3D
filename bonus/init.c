@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/12 16:12:27 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:22:19 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	init_game(t_game *game)
 {
 	game->mlx_ptr = NULL;
 	game->map = NULL;
+	game->cam_x = 0;
+	game->cam_y = 0;
 	game->player.y = -1;
 	game->player.x = -1;
 	game->map_height = 0;

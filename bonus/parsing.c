@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/12 15:31:35 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:22:48 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ static char	*search_map(t_game *game)
 		while (line[i] && !ft_isprint(line[i]))
 			i++;
 		if (line[i] == '0' || line[i] == '1' || line[i] == 'N' || line[i] == 'W'
-			|| line[i] == 'E' || line[i] == 'S')
+			|| line[i] == 'E' || line[i] == 'S' || line[i] == 'D')
 			return (line);
 		free(line);
 		line = get_next_line(game->fd);
@@ -267,7 +267,7 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 		}
 		else if (!ft_isprint(line[i]))
 			game->map[line_nbr][i] = ' ';
-		else if (line[i] == '1' || line[i] == '0')
+		else if (line[i] == '1' || line[i] == '0' || line[i] == 'D')
 			game->map[line_nbr][i] = line[i];
 		else
 		{

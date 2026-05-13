@@ -6,7 +6,7 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 15:28:39 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/07 15:49:57 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/08 14:35:14 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	put_square(t_game *game, int x_start, int y_start, int color)
 	int	x;
 	int	y;
 
-	x_start = MAP_W_START + (x_start * 20);
-	y_start = MAP_H_START + (y_start * 20);
+	x_start = MAP_W_START + ((x_start - game->cam_x) * 20);
+	y_start = MAP_H_START + ((y_start - game->cam_y) * 20);
 	x = x_start;
 	y = y_start;
 	while (y < y_start + 20)
@@ -38,37 +38,50 @@ static void	put_square(t_game *game, int x_start, int y_start, int color)
 	}
 }
 
-static void	put_walls(t_game *game)
+static void	put_walls(t_game *game, int cam_x, int cam_y)
 {
-	int	x;
-	int	y;
-	int	color;
+	int	cam_x_init;
+	int	cam_y_init;
+	int	color_wall;
 
-	x = 0;
-	y = 0;
-	color = color_recovery(game, "100,100,100");
-	while (y < (MAP_H_LIMIT - MAP_H_START) / 20)
+	cam_x_init = cam_x;
+	cam_y_init = cam_y;
+	color_wall = color_recovery(game, "100,100,100");
+	while (cam_y < cam_y_init + 10)
 	{
-		while (x < (MAP_W_LIMIT - MAP_W_START) / 20)
+		while (cam_x < cam_x_init + 10)
 		{
-			if (game->map[y][x] == '1')
-				put_square(game, x, y, color);
-			x++;
+			if (cam_x < game->map_width && cam_y < game->map_height
+				&& game->map[cam_y][cam_x] == '1')
+				put_square(game, cam_x, cam_y, color_wall);
+			cam_x++;
 		}
-		x = 0;
-		y++;
+		cam_x = cam_x_init;
+		cam_y++;
 	}
 }
 
-static void	put_player(t_game *game)
+static void	put_chars(t_game *game)
 {
 	int	color_player;
-	int	color_monster;
+	//int	color_monster;
 
 	color_player = color_recovery(game, "20,200,0");
-	color_monster = color_recovery(game, "200,0,0");
+	//color_monster = color_recovery(game, "200,0,0");
 	put_square(game, (int)game->player.x, (int)game->player.y, color_player);
-	put_square(game, 1, 1, color_monster);
+	//put_square(game, 1, 1, color_monster);
+}
+
+static void update_minimap_camera(t_game *game)
+{
+	if (game->cam_x > 0 && game->player.x < game->cam_x + 3)
+		game->cam_x--;
+	else if (game->map_width > game->cam_x + 10 && game->player.x > game->cam_x + 7)
+		game->cam_x++;
+	if (game->cam_y > 0 && game->player.y < game->cam_y + 3)
+		game->cam_y--;
+	else if (game->map_height > game->cam_y + 10 && game->player.y > game->cam_y + 7)
+		game->cam_y++;
 }
 
 void	minimap(t_game *game)
@@ -78,6 +91,7 @@ void	minimap(t_game *game)
 
 	x = MAP_W_START;
 	y = MAP_H_START;
+	update_minimap_camera(game);
 	while (y < MAP_H_LIMIT)
 	{
 		while (x < MAP_W_LIMIT)
@@ -88,6 +102,6 @@ void	minimap(t_game *game)
 		x = MAP_W_START;
 		y++;
 	}
-	put_walls(game);
-	put_player(game);
+	put_walls(game, game->cam_x, game->cam_y);
+	put_chars(game);
 }

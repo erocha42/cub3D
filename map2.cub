@@ -1,0 +1,12 @@
+WE 	./sprites/wall2.xpm
+EA ./sprites/wall2.xpm
+
+NO ./sprites/wall3.xpm
+SO	./sprites/wall3.xpm
+C 0,0,0
+F 0,255,255
+
+111111111
+1000N0001
+100000001
+111111111

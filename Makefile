@@ -37,7 +37,8 @@ BONUS_SRC   = 	main_bonus.c \
 				bonus/sprite.c \
 				bonus/torch.c \
 				bonus/BFS.c \
-				bonus/audio.c
+				bonus/audio.c \
+				bonus/doors.c
 
 OBJ         = $(SRC:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJ   = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)
