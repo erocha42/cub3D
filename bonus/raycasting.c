@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:06:48 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/13 19:10:39 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,38 @@ static	int door_idx(t_game *game, int x, int y)
 
 int	raycasting(t_game *game)
 {
-	int		x;
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	int		mapX;
-	int		mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int		stepX;
-	int		stepY;
-	int		hit;
-	int		side;
-	int		lineHeight;
-	int		DrawStart;
-	int		DrawEnd;
-	int		y;
-	int		color;
-	double	wallX;
-	int		texX;
-	double	step;
-	int		texY;
-	double	texPos;
 	double	player_angle;
 	int		sky_offset_x;
 	int		sky_texX;
 	int		sky_texY;
+	int x;
+	int	idx;
+	double cameraX;
+	double rayDirX;
+	double rayDirY;
+	int mapX;
+	int mapY;
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	double perpWallDist;
+	double	distCenter;
+	int stepX;
+	int stepY;
+	int hit;
+	double	hitPos;
+	int side;
+	int lineHeight;
+	int DrawStart;
+	int DrawEnd;
+	int y;
+	int color;
+	double wallX;
+	int texX;
+	double step;
+	int texY;
+	double texPos;
 
 	x = 0;
 	player_angle = atan2(game->player.dir_y, game->player.dir_x);
