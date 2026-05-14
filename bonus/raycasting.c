@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:10:39 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:06:49 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,14 @@ int	get_tex_color(t_img *img, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-static	int door_idx(t_game *game, int x, int y)
-{
-	int	i;
-
-	i = 0;
-	while (i < game->nb_doors)
-	{
-		if (game->doors[i].x == x && game->doors[i].y == y)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 int	raycasting(t_game *game)
 {
-	double	player_angle;
-	int		sky_offset_x;
-	int		sky_texX;
-	int		sky_texY;
+	double player_angle;
+	int sky_offset_x;
+	int sky_texX;
+	int sky_texY;
 	int x;
-	int	idx;
+	int idx;
 	double cameraX;
 	double rayDirX;
 	double rayDirY;
@@ -61,11 +47,9 @@ int	raycasting(t_game *game)
 	double deltaDistX;
 	double deltaDistY;
 	double perpWallDist;
-	double	distCenter;
 	int stepX;
 	int stepY;
 	int hit;
-	double	hitPos;
 	int side;
 	int lineHeight;
 	int DrawStart;
@@ -77,19 +61,24 @@ int	raycasting(t_game *game)
 	double step;
 	int texY;
 	double texPos;
+	double hitPos;
+	int is_door_hit;
 
 	x = 0;
 	player_angle = atan2(game->player.dir_y, game->player.dir_x);
 	if (player_angle < 0)
 		player_angle += 2 * M_PI;
 	sky_offset_x = (int)((player_angle / (2 * M_PI)) * game->sky_img.width);
+
 	while (x < 1920)
 	{
+		is_door_hit = 0;
 		cameraX = 2 * x / (double)1920 - 1;
 		rayDirX = game->player.dir_x + game->player.plane_x * cameraX;
 		rayDirY = game->player.dir_y + game->player.plane_y * cameraX;
 		mapX = (int)game->player.x;
 		mapY = (int)game->player.y;
+
 		if (rayDirX == 0)
 			deltaDistX = 1e30;
 		else
@@ -98,7 +87,9 @@ int	raycasting(t_game *game)
 			deltaDistY = 1e30;
 		else
 			deltaDistY = fabs(1 / rayDirY);
+
 		hit = 0;
+
 		if (rayDirX < 0)
 		{
 			stepX = -1;
@@ -119,6 +110,7 @@ int	raycasting(t_game *game)
 			stepY = 1;
 			sideDistY = (mapY + 1 - game->player.y) * deltaDistY;
 		}
+
 		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
@@ -133,41 +125,44 @@ int	raycasting(t_game *game)
 				mapY += stepY;
 				side = 1;
 			}
+
 			if (game->map[mapY][mapX] == '1')
 				hit = 1;
-			if (game->map[mapY][mapX] == 'D')
+			else if (game->map[mapY][mapX] == 'D')
 			{
 				idx = door_idx(game, mapX, mapY);
-				if (idx != -1 && game->doors[idx].state == 1)
-					continue ;
-				hit = 1;
+				if (idx != -1 && game->doors[idx].state != 2)
+				{
+					if (side == 0)
+						perpWallDist = (sideDistX - deltaDistX);
+					else
+						perpWallDist = (sideDistY - deltaDistY);
+
+					if (side == 0)
+						hitPos = game->player.y + perpWallDist * rayDirY;
+					else
+						hitPos = game->player.x + perpWallDist * rayDirX;
+
+					hitPos -= floor(hitPos);
+
+					if (hitPos >= game->doors[idx].open_amount && hitPos < 1.0)
+					{
+						hit = 1;
+						is_door_hit = 1;
+					}
+				}
 			}
 		}
-		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
-		else
-			perpWallDist = (sideDistY - deltaDistY);
-		game->z_buffer[x] = perpWallDist;
-			perpWallDist = sideDistX - deltaDistX;
-		if (side == 1)
-			perpWallDist = sideDistY - deltaDistY;
-		idx = door_idx(game, mapX, mapY);
-		if (game->map[mapY][mapX] == 'D' && idx != -1 && game->doors[idx].state == 0)
+
+		if (is_door_hit == 0)
 		{
 			if (side == 0)
-			{
-				distCenter = perpWallDist + deltaDistX;
-				hitPos = game->player.y + distCenter * rayDirY;
-			}
-			if (side == 1)
-			{
-				distCenter = perpWallDist + deltaDistY;
-				hitPos = game->player.x + distCenter * rayDirX;
-			}
-			hitPos -= floor(hitPos);
-			if (hitPos >= 0.0 && hitPos <= 1.0)
-				perpWallDist = distCenter;
+				perpWallDist = (sideDistX - deltaDistX);
+			else
+				perpWallDist = (sideDistY - deltaDistY);
 		}
+
+		game->z_buffer[x] = perpWallDist;
 		lineHeight = (int)(1080 / perpWallDist);
 		DrawStart = (lineHeight * -1) / 2 + 1080 / 2;
 		if (DrawStart < 0)
@@ -175,22 +170,30 @@ int	raycasting(t_game *game)
 		DrawEnd = lineHeight / 2 + 1080 / 2;
 		if (DrawEnd >= 1080)
 			DrawEnd = 1080 - 1;
+
 		if (side == 0)
 			wallX = game->player.y + perpWallDist * rayDirY;
 		else
 			wallX = game->player.x + perpWallDist * rayDirX;
 		wallX -= floor(wallX);
-		texX = (int)(wallX * 64);
-		if (game->map[mapY][mapX] != 'D')
+
+		if (is_door_hit == 1)
 		{
-			if (side == 0 && rayDirX > 0)
-				texX = 64 - texX - 1;
-			if (side == 1 && rayDirY < 0)
-				texX = 64 - texX - 1;
+			wallX -= game->doors[idx].open_amount;
+			if (wallX < 0.0)
+				wallX += 1.0;
 		}
+
+		texX = (int)(wallX * 64);
+		if (side == 0 && rayDirX > 0)
+			texX = 64 - texX - 1;
+		if (side == 1 && rayDirY < 0)
+			texX = 64 - texX - 1;
+
 		step = 1.0 * 64 / lineHeight;
 		texPos = (DrawStart - 1080 / 2.0 + lineHeight / 2.0) * step;
 		y = 0;
+
 		while (y < DrawStart)
 		{
 			sky_texX = (sky_offset_x + x) % game->sky_img.width;
@@ -230,6 +233,7 @@ int	raycasting(t_game *game)
 	render_sprite(game);
 	if (game->player.torch == 0)
 		render_torch(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
 	return (1);

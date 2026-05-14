@@ -6,11 +6,42 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 17:54:01 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:07:00 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:05:04 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	jumpscare(t_game *game)
+{
+	int	x;
+	int	y;
+	int	tex_x;
+	int	tex_y;
+	int	color;
+
+	x = 0;
+	while (x < 1920)
+	{
+		y = 0;
+		while (y < 1080)
+		{
+			tex_x = (x * game->tex_sprite.width) / 1920;
+			tex_y = (y * game->tex_sprite.height) / 1080;
+			if (tex_x >= game->tex_sprite.width)
+				tex_x = game->tex_sprite.width - 1;
+			if (tex_y >= game->tex_sprite.height)
+				tex_y = game->tex_sprite.height - 1;
+			color = get_tex_color(&game->tex_sprite, tex_x, tex_y);
+			my_mlx_pixel_put(game, x, y, color);
+			y++;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
+		0);
+	mlx_do_sync(game->mlx_ptr);
+}
 
 void	update_sprite(t_game *game)
 {
@@ -31,7 +62,10 @@ void	update_sprite(t_game *game)
 			+ pow(game->player.y - game->sprite.y, 2));
 	if (dist_euclid < 0.3)
 	{
-		printf("GAME OVER\n");
+		jumpscare(game);
+		ma_sound_set_volume(&game->monster_sound, 0);
+		ma_sound_start(&game->jumpscare_sound);
+		usleep(2000000);
 		clean_exit(game, NO_ERROR);
 	}
 	if (game->heatmap)

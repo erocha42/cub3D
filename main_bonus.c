@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:07:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:00:52 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,15 @@ static int	key_press(int keycode, t_game *game)
 		game->player.rotate_right = 1;
 	if (keycode == 65505)
 		game->player.sprint = 1;
-	if (keycode == 101)
+	if (keycode == 102)
 	{
 		if (game->player.torch == 1)
 			game->player.torch = 0;
 		else
 			game->player.torch = 1;
 	}
+	if (keycode == 101)
+		interact_door(game);
 	return (0);
 }
 
@@ -74,38 +76,38 @@ int	game_loop(t_game *game)
 	RotSpeed = 0.1;
 	if (game->player.move_up == 1)
 	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				+ game->player.dir_x * MoveSpeed)] != '1')
+		if (is_walkable(game, game->player.x + game->player.dir_x * MoveSpeed,
+				game->player.y))
 			game->player.x += game->player.dir_x * MoveSpeed;
-		if (game->map[(int)(game->player.y + game->player.dir_y
-				* MoveSpeed)][(int)game->player.x] != '1')
+		if (is_walkable(game, game->player.x, game->player.y
+				+ game->player.dir_y * MoveSpeed))
 			game->player.y += game->player.dir_y * MoveSpeed;
 	}
 	if (game->player.move_down == 1)
 	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				- game->player.dir_x * MoveSpeed)] != '1')
+		if (is_walkable(game, game->player.x - game->player.dir_x * MoveSpeed,
+				game->player.y))
 			game->player.x -= game->player.dir_x * MoveSpeed;
-		if (game->map[(int)(game->player.y - game->player.dir_y
-				* MoveSpeed)][(int)game->player.x] != '1')
+		if (is_walkable(game, game->player.x, game->player.y
+				- game->player.dir_y * MoveSpeed))
 			game->player.y -= game->player.dir_y * MoveSpeed;
 	}
 	if (game->player.move_left == 1)
 	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				+ game->player.dir_y * MoveSpeed)] != '1')
+		if (is_walkable(game, game->player.x + game->player.dir_y * MoveSpeed,
+				game->player.y))
 			game->player.x += game->player.dir_y * MoveSpeed;
-		if (game->map[(int)(game->player.y - game->player.dir_x
-				* MoveSpeed)][(int)game->player.x] != '1')
+		if (is_walkable(game, game->player.x, game->player.y
+				- game->player.dir_x * MoveSpeed))
 			game->player.y -= game->player.dir_x * MoveSpeed;
 	}
 	if (game->player.move_right == 1)
 	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				- game->player.dir_y * MoveSpeed)] != '1')
+		if (is_walkable(game, game->player.x - game->player.dir_y * MoveSpeed,
+				game->player.y))
 			game->player.x -= game->player.dir_y * MoveSpeed;
-		if (game->map[(int)(game->player.y + game->player.dir_x
-				* MoveSpeed)][(int)game->player.x] != '1')
+		if (is_walkable(game, game->player.x, game->player.y
+				+ game->player.dir_x * MoveSpeed))
 			game->player.y += game->player.dir_x * MoveSpeed;
 	}
 	if (game->player.rotate_left == 1)
@@ -136,6 +138,7 @@ int	game_loop(t_game *game)
 	}
 	mouse_hook(game);
 	update_sprite(game);
+	update_doors_animation(game);
 	raycasting(game);
 	return (0);
 }

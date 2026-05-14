@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 16:41:30 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 15:28:46 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/14 14:28:35 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	heatmap(t_game *game)
 		}
 		while (j < game->map_width)
 		{
-			if (game->map[i][j] == '0' || game->map[i][j] == 'N'
-				|| game->map[i][j] == 'S' || game->map[i][j] == 'E'
-				|| game->map[i][j] == 'W')
+			if (is_walkable(game, j, i) == 1)
 				game->heatmap[i][j] = -1;
 			else
 				game->heatmap[i][j] = -2;
@@ -105,7 +103,7 @@ void	get_next_step(t_game *game, int mx, int my, int *tx, int *ty)
 	*tx = mx;
 	*ty = my;
 	if (!game->heatmap)
-		return;
+		return ;
 	i = 0;
 	while (i < 4)
 	{

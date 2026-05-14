@@ -60,11 +60,12 @@ typedef struct s_sprite
 	int			texture;
 }				t_sprite;
 
-typedef	struct	s_doors
+typedef struct s_doors
 {
-	int	x;
-	int	y;
-	int	state;
+	int			x;
+	int			y;
+	int			state;
+	double		open_amount;
 }				t_doors;
 
 typedef struct s_game
@@ -103,6 +104,7 @@ typedef struct s_game
 	int			**heatmap;
 	ma_engine	audio_engine;
 	ma_sound	monster_sound;
+	ma_sound	jumpscare_sound;
 	int			has_audio;
 }				t_game;
 
@@ -134,6 +136,11 @@ void			get_next_step(t_game *game, int mx, int my, int *tx, int *ty);
 void			init_audio(t_game *game);
 void			heatmap(t_game *game);
 void			doors(t_game *game);
-
+int				door_idx(t_game *game, int x, int y);
+void			interact_door(t_game *game);
+int				is_walkable(t_game *game, double x, double y);
+void			update_doors_animation(t_game *game);
+void			my_mlx_pixel_put(t_game *game, int x, int y, int color);
+void			minimap(t_game *game);
 
 #endif
