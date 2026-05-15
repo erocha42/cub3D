@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 17:54:01 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/14 17:05:04 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:42:42 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	jumpscare(t_game *game)
 	int	tex_y;
 	int	color;
 
-	x = 0;
-	while (x < 1920)
+	x = -1;
+	while (++x < 1920)
 	{
 		y = 0;
 		while (y < 1080)
@@ -33,10 +33,8 @@ void	jumpscare(t_game *game)
 			if (tex_y >= game->tex_sprite.height)
 				tex_y = game->tex_sprite.height - 1;
 			color = get_tex_color(&game->tex_sprite, tex_x, tex_y);
-			my_mlx_pixel_put(game, x, y, color);
-			y++;
+			my_mlx_pixel_put(game, x, y++, color);
 		}
-		x++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
@@ -47,8 +45,8 @@ void	update_sprite(t_game *game)
 {
 	double	dist_euclid;
 	double	dist_target;
-	double	StepX;
-	double	StepY;
+	double	stepx;
+	double	stepy;
 	int		tx;
 	int		ty;
 	double	target_x;
@@ -99,78 +97,78 @@ void	update_sprite(t_game *game)
 				- game->sprite.y, 2));
 	if (dist_target > 0.05)
 	{
-		StepX = ((target_x)-game->sprite.x) / dist_target * 0.05;
-		StepY = ((target_y)-game->sprite.y) / dist_target * 0.05;
-		game->sprite.x += StepX;
-		game->sprite.y += StepY;
+		stepx = ((target_x)-game->sprite.x) / dist_target * 0.05;
+		stepy = ((target_y)-game->sprite.y) / dist_target * 0.05;
+		game->sprite.x += stepx;
+		game->sprite.y += stepy;
 	}
 }
 
 void	render_sprite(t_game *game)
 {
-	double	SpriteX;
-	double	SpriteY;
-	double	InvDet;
-	double	TransformX;
-	double	TransformY;
-	int		SpriteScreenX;
-	int		SpriteDimension;
-	int		DrawStartY;
-	int		DrawEndY;
-	int		DrawStartX;
-	int		DrawEndX;
+	double	spritex;
+	double	spritey;
+	double	invdet;
+	double	transformx;
+	double	transformy;
+	int		spritescreenx;
+	int		spritedimension;
+	int		drawstarty;
+	int		drawendy;
+	int		drawstartx;
+	int		drawendx;
 	int		stripe;
 	int		y;
-	int		TexX;
+	int		texx;
 	int		d;
-	int		TexY;
+	int		texy;
 	int		color;
 
-	SpriteX = game->sprite.x - game->player.x;
-	SpriteY = game->sprite.y - game->player.y;
-	InvDet = 1 / (game->player.plane_x * game->player.dir_y - game->player.dir_x
+	spritex = game->sprite.x - game->player.x;
+	spritey = game->sprite.y - game->player.y;
+	invdet = 1 / (game->player.plane_x * game->player.dir_y - game->player.dir_x
 			* game->player.plane_y);
-	TransformX = InvDet * (game->player.dir_y * SpriteX - game->player.dir_x
-			* SpriteY);
-	TransformY = InvDet * (-game->player.plane_y * SpriteX
-			+ game->player.plane_x * SpriteY);
-	if (TransformY <= 0)
+	transformx = invdet * (game->player.dir_y * spritex - game->player.dir_x
+			* spritey);
+	transformy = invdet * (-game->player.plane_y * spritex
+			+ game->player.plane_x * spritey);
+	if (transformy <= 0)
 		return ;
-	SpriteScreenX = (int)(1920 / 2) * (1 + TransformX / TransformY);
-	SpriteDimension = abs((int)(1080 / TransformY));
-	DrawStartY = -SpriteDimension / 2 + 1080 / 2;
-	if (DrawStartY < 0)
-		DrawStartY = 0;
-	DrawEndY = SpriteDimension / 2 + 1080 / 2;
-	if (DrawEndY >= 1080)
-		DrawEndY = 1080 - 1;
-	DrawStartX = -SpriteDimension / 2 + SpriteScreenX;
-	if (DrawStartX < 0)
-		DrawStartX = 0;
-	DrawEndX = SpriteDimension / 2 + SpriteScreenX;
-	if (DrawEndX > 1920)
-		DrawEndX = 1920;
-	stripe = DrawStartX;
-	while (stripe < DrawEndX)
+	spritescreenx = (int)(1920 / 2) * (1 + transformx / transformy);
+	spritedimension = abs((int)(1080 / transformy));
+	drawstarty = -spritedimension / 2 + 1080 / 2;
+	if (drawstarty < 0)
+		drawstarty = 0;
+	drawendy = spritedimension / 2 + 1080 / 2;
+	if (drawendy >= 1080)
+		drawendy = 1080 - 1;
+	drawstartx = -spritedimension / 2 + spritescreenx;
+	if (drawstartx < 0)
+		drawstartx = 0;
+	drawendx = spritedimension / 2 + spritescreenx;
+	if (drawendx > 1920)
+		drawendx = 1920;
+	stripe = drawstartx;
+	while (stripe < drawendx)
 	{
-		TexX = (stripe - (-SpriteDimension / 2 + SpriteScreenX)) * 200
-			/ SpriteDimension;
-		if (TexX < 0)
-			TexX = 0;
-		if (TexX >= 200)
-			TexX = 199;
-		if (TransformY < game->z_buffer[stripe] && TransformY > 0)
+		texx = (stripe - (-spritedimension / 2 + spritescreenx)) * 200
+			/ spritedimension;
+		if (texx < 0)
+			texx = 0;
+		if (texx >= 200)
+			texx = 199;
+		if (transformy < game->z_buffer[stripe] && transformy > 0)
 		{
-			y = DrawStartY;
-			while (y < DrawEndY)
+			y = drawstarty;
+			while (y < drawendy)
 			{
-				d = y - 1080 / 2 + SpriteDimension / 2;
-				TexY = (d * 200) / SpriteDimension;
-				if (TexY < 0)
-					TexY = 0;
-				if (TexY >= 200)
-					TexY = 199;
-				color = get_tex_color(&game->tex_sprite, TexX, TexY);
+				d = y - 1080 / 2 + spritedimension / 2;
+				texy = (d * 200) / spritedimension;
+				if (texy < 0)
+					texy = 0;
+				if (texy >= 200)
+					texy = 199;
+				color = get_tex_color(&game->tex_sprite, texx, texy);
 				if (color != 0)
 					my_mlx_pixel_put(game, stripe, y, color);
 				y++;

@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 18:55:41 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:54:44 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,131 +31,131 @@ int	get_tex_color(t_img *img, int x, int y)
 
 int	raycasting(t_game *game)
 {
-	int x;
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
-	int mapX;
-	int mapY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int stepX;
-	int stepY;
-	int hit;
-	int side;
-	int lineHeight;
-	int DrawStart;
-	int DrawEnd;
-	int y;
-	int color;
-	double wallX;
-	int texX;
-	double step;
-	int texY;
-	double texPos;
+	int		x;
+	double	camerax;
+	double	raydirx;
+	double	raydiry;
+	int		mapx;
+	int		mapy;
+	double	sidedistx;
+	double	sidedisty;
+	double	deltadistx;
+	double	deltadisty;
+	double	perpwalldist;
+	int		stepx;
+	int		stepy;
+	int		hit;
+	int		side;
+	int		lineheight;
+	int		drawstart;
+	int		drawend;
+	int		y;
+	int		color;
+	double	wallx;
+	int		texx;
+	double	step;
+	int		texy;
+	double	texpos;
 
 	x = 0;
 	while (x < 1920)
 	{
-		cameraX = 2 * x / (double)1920 - 1;
-		rayDirX = game->player.dir_x + game->player.plane_x * cameraX;
-		rayDirY = game->player.dir_y + game->player.plane_y * cameraX;
-		mapX = (int)game->player.x;
-		mapY = (int)game->player.y;
-		if (rayDirX == 0)
-			deltaDistX = 1e30;
+		camerax = 2 * x / (double)1920 - 1;
+		raydirx = game->player.dir_x + game->player.plane_x * camerax;
+		raydiry = game->player.dir_y + game->player.plane_y * camerax;
+		mapx = (int)game->player.x;
+		mapy = (int)game->player.y;
+		if (raydirx == 0)
+			deltadistx = 1e30;
 		else
-			deltaDistX = fabs(1 / rayDirX);
-		if (rayDirY == 0)
-			deltaDistY = 1e30;
+			deltadistx = fabs(1 / raydirx);
+		if (raydiry == 0)
+			deltadisty = 1e30;
 		else
-			deltaDistY = fabs(1 / rayDirY);
+			deltadisty = fabs(1 / raydiry);
 		hit = 0;
-		if (rayDirX < 0)
+		if (raydirx < 0)
 		{
-			stepX = -1;
-			sideDistX = (game->player.x - mapX) * deltaDistX;
+			stepx = -1;
+			sidedistx = (game->player.x - mapx) * deltadistx;
 		}
 		else
 		{
-			stepX = 1;
-			sideDistX = (mapX + 1 - game->player.x) * deltaDistX;
+			stepx = 1;
+			sidedistx = (mapx + 1 - game->player.x) * deltadistx;
 		}
-		if (rayDirY < 0)
+		if (raydiry < 0)
 		{
-			stepY = -1;
-			sideDistY = (game->player.y - mapY) * deltaDistY;
+			stepy = -1;
+			sidedisty = (game->player.y - mapy) * deltadisty;
 		}
 		else
 		{
-			stepY = 1;
-			sideDistY = (mapY + 1 - game->player.y) * deltaDistY;
+			stepy = 1;
+			sidedisty = (mapy + 1 - game->player.y) * deltadisty;
 		}
 		while (hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (sidedistx < sidedisty)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
+				sidedistx += deltadistx;
+				mapx += stepx;
 				side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
+				sidedisty += deltadisty;
+				mapy += stepy;
 				side = 1;
 			}
-			if (game->map[mapY][mapX] == '1')
+			if (game->map[mapy][mapx] == '1')
 				hit = 1;
 		}
 		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
+			perpwalldist = (sidedistx - deltadistx);
 		else
-			perpWallDist = (sideDistY - deltaDistY);
-		lineHeight = (int)(1080 / perpWallDist);
-		DrawStart = (lineHeight * -1) / 2 + 1080 / 2;
-		if (DrawStart < 0)
-			DrawStart = 0;
-		DrawEnd = lineHeight / 2 + 1080 / 2;
-		if (DrawEnd >= 1080)
-			DrawEnd = 1080 - 1;
+			perpwalldist = (sidedisty - deltadisty);
+		lineheight = (int)(1080 / perpwalldist);
+		drawstart = (lineheight * -1) / 2 + 1080 / 2;
+		if (drawstart < 0)
+			drawstart = 0;
+		drawend = lineheight / 2 + 1080 / 2;
+		if (drawend >= 1080)
+			drawend = 1080 - 1;
 		if (side == 0)
-			wallX = game->player.y + perpWallDist * rayDirY;
+			wallx = game->player.y + perpwalldist * raydiry;
 		else
-			wallX = game->player.x + perpWallDist * rayDirX;
-		wallX -= floor(wallX);
-		texX = (int)(wallX * 64);
-		if (side == 0 && rayDirX > 0)
-			texX = 64 - texX - 1;
-		if (side == 1 && rayDirY < 0)
-			texX = 64 - texX - 1;
-		step = 1.0 * 64 / lineHeight;
-		texPos = (DrawStart - 1080 / 2.0 + lineHeight / 2.0) * step;
+			wallx = game->player.x + perpwalldist * raydirx;
+		wallx -= floor(wallx);
+		texx = (int)(wallx * 64);
+		if (side == 0 && raydirx > 0)
+			texx = 64 - texx - 1;
+		if (side == 1 && raydiry < 0)
+			texx = 64 - texx - 1;
+		step = 1.0 * 64 / lineheight;
+		texpos = (drawstart - 1080 / 2.0 + lineheight / 2.0) * step;
 		y = 0;
-		while (y < DrawStart)
+		while (y < drawstart)
 		{
 			my_mlx_pixel_put(game, x, y, game->ceiling_color);
 			y++;
 		}
-		while (y <= DrawEnd)
+		while (y <= drawend)
 		{
-			texY = (int)texPos;
-			if (texY < 0)
-				texY = 0;
-			else if (texY >= 64)
-				texY = 64 - 1;
-			texPos += step;
-			if (side == 0 && rayDirX > 0)
-				color = get_tex_color(&game->tex_e, texX, texY);
-			else if (side == 0 && rayDirX < 0)
-				color = get_tex_color(&game->tex_w, texX, texY);
-			else if (side == 1 && rayDirY > 0)
-				color = get_tex_color(&game->tex_s, texX, texY);
+			texy = (int)texpos;
+			if (texy < 0)
+				texy = 0;
+			else if (texy >= 64)
+				texy = 64 - 1;
+			texpos += step;
+			if (side == 0 && raydirx > 0)
+				color = get_tex_color(&game->tex_e, texx, texy);
+			else if (side == 0 && raydirx < 0)
+				color = get_tex_color(&game->tex_w, texx, texy);
+			else if (side == 1 && raydiry > 0)
+				color = get_tex_color(&game->tex_s, texx, texy);
 			else
-				color = get_tex_color(&game->tex_n, texX, texY);
+				color = get_tex_color(&game->tex_n, texx, texy);
 			my_mlx_pixel_put(game, x, y, color);
 			y++;
 		}

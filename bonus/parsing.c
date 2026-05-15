@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 18:57:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:07:36 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 			|| line[i] == 'S')
 		{
 			if (game->player.x != -1)
-				return(0);
+				return (0);
 			game->player.y = line_nbr + 0.5;
 			game->player.x = i + 0.5;
 			game->map[line_nbr][i] = line[i];
@@ -260,7 +260,7 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 		else if (line[i] == 'M')
 		{
 			if (game->sprite.x != -1)
-				return(0);
+				return (0);
 			game->sprite.x = i + 0.5;
 			game->sprite.y = line_nbr + 0.5;
 			game->map[line_nbr][i] = '0';
@@ -272,12 +272,12 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 		else
 		{
 			game->map[line_nbr][i] = '\0';
-			return(0);
+			return (0);
 		}
 		i++;
 	}
 	game->map[line_nbr][i] = '\0';
-	return(1);
+	return (1);
 }
 
 static void	mapper(t_game *game, char *first_line)
@@ -309,7 +309,7 @@ static void	mapper(t_game *game, char *first_line)
 	}
 	free(line);
 	if (game->player.x == -1)
-        clean_exit(game, MAP_ERROR);
+		clean_exit(game, MAP_ERROR);
 }
 
 void	parsing(char *av[], t_game *game)

@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:36:50 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/14 17:03:57 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:43:33 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	init_audio(t_game *game)
 {
-	ma_result result;
-	ma_result result2;
+	ma_result	result;
+	ma_result	result2;
 
 	game->has_audio = 0;
 	if (ma_engine_init(NULL, &game->audio_engine) != MA_SUCCESS)

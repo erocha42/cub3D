@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 13:33:52 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/14 15:56:10 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:07:26 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static void	doors_recovery(t_game *game)
 	int	y;
 
 	x = 0;
-	y = 0;
+	y = -1;
 	game->doors = malloc(sizeof(t_doors) * game->map_height * game->map_width);
 	if (!game->doors)
 		clean_exit(game, MALLOC_ERROR);
 	game->nb_doors = 0;
-	while (y < game->map_height)
+	while (++y < game->map_height)
 	{
 		while (game->map[y][x])
 		{
@@ -38,7 +38,6 @@ static void	doors_recovery(t_game *game)
 			x++;
 		}
 		x = 0;
-		y++;
 	}
 }
 
@@ -79,16 +78,14 @@ void	interact_door(t_game *game)
 
 void	update_doors_animation(t_game *game)
 {
-	int		i;
-	double	speed;
+	int	i;
 
 	i = 0;
-	speed = 0.05;
 	while (i < game->nb_doors)
 	{
 		if (game->doors[i].state == 1)
 		{
-			game->doors[i].open_amount += speed;
+			game->doors[i].open_amount += 0.05;
 			if (game->doors[i].open_amount >= 1.0)
 			{
 				game->doors[i].open_amount = 1.0;
@@ -97,7 +94,7 @@ void	update_doors_animation(t_game *game)
 		}
 		else if (game->doors[i].state == 3)
 		{
-			game->doors[i].open_amount -= speed;
+			game->doors[i].open_amount -= 0.05;
 			if (game->doors[i].open_amount <= 0.0)
 			{
 				game->doors[i].open_amount = 0.0;

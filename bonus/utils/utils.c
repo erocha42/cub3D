@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:23:18 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/14 13:27:12 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:07:21 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_tab_int(int **tab, int limit)
 
 int	is_walkable(t_game *game, double x, double y)
 {
-	int idx;
+	int	idx;
 
 	if (game->map[(int)y][(int)x] == '1')
 		return (0);
