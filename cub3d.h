@@ -197,7 +197,6 @@ void			valid_map(t_game *game);
 void			init_player_cam(t_game *game);
 void			calc_line(t_game *game, t_ray *r);
 void			draw_column(t_game *game, t_ray *r);
-<<<<<<< HEAD
 void			data_counter_init(int data_counter[]);
 char			*skip(char *line);
 void			data_recovery(t_game *game, char *line, int data_counter[]);
@@ -206,8 +205,6 @@ int				nbr_line(t_game *game, char *first_line);
 void			filler(t_game *game, size_t end_line, char *line, int line_nbr);
 int				ft_strisdigits(char *str);
 int				pass_line(int fd, char *line);
-=======
->>>>>>> 984444699ae3097559e125e1bbd392a5cc7c2475
 
 // BONUS :
 
