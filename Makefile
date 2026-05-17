@@ -20,7 +20,12 @@ SRC			=	main.c \
 				mandatory/raycasting.c \
 				mandatory/init_sprite.c \
 				mandatory/valid_map.c \
-				mandatory/clean_exit.c 
+				mandatory/clean_exit.c \
+				mandatory/init_mlx.c \
+				mandatory/raycast_draw.c \
+				mandatory/utils/parsing_utils/data_handling_utils.c \
+				mandatory/utils/parsing_utils/mapper_utils.c \
+				mandatory/utils/parsing_utils/mini_utils.c
 
 BONUS_SRC   = 	main_bonus.c \
 				getnextline/get_next_line.c \
@@ -39,6 +44,13 @@ BONUS_SRC   = 	main_bonus.c \
 				bonus/BFS.c \
 				bonus/audio.c \
 				bonus/doors.c \
+				bonus/init_mlx.c \
+				bonus/update_sprite.c \
+				bonus/utils/mlx_utils.c \
+				bonus/raycast_draw.c \
+				bonus/utils/parsing_utils/data_handling_utils.c \
+				bonus/utils/parsing_utils/mapper_utils.c \
+				bonus/utils/parsing_utils/mini_utils.c
 
 OBJ         = $(SRC:%.c=$(OBJ_DIR)/%.o)
 BONUS_OBJ   = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)

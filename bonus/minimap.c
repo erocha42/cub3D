@@ -6,16 +6,16 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 15:28:39 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/14 15:31:29 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/17 18:16:16 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-# define MAP_W_START 1700
-# define MAP_W_LIMIT 1900
-# define MAP_H_START 25
-# define MAP_H_LIMIT 225
+#define MAP_W_START 1700
+#define MAP_W_LIMIT 1900
+#define MAP_H_START 25
+#define MAP_H_LIMIT 225
 
 static void	put_square(t_game *game, int x_start, int y_start, int color)
 {
@@ -69,15 +69,17 @@ static void	put_chars(t_game *game)
 	put_square(game, (int)game->player.x, (int)game->player.y, color_player);
 }
 
-static void update_minimap_camera(t_game *game)
+static void	update_minimap_camera(t_game *game)
 {
 	if (game->cam_x > 0 && game->player.x < game->cam_x + 3)
 		game->cam_x--;
-	else if (game->map_width > game->cam_x + 10 && game->player.x > game->cam_x + 7)
+	else if (game->map_width > game->cam_x + 10 && game->player.x > game->cam_x
+		+ 7)
 		game->cam_x++;
 	if (game->cam_y > 0 && game->player.y < game->cam_y + 3)
 		game->cam_y--;
-	else if (game->map_height > game->cam_y + 10 && game->player.y > game->cam_y + 7)
+	else if (game->map_height > game->cam_y + 10 && game->player.y > game->cam_y
+		+ 7)
 		game->cam_y++;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 18:25:15 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:09:55 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	key_press(int keycode, t_game *game)
 {
 	if (keycode == 65307)
-        clean_exit(game, NO_ERROR);
+		clean_exit(game, NO_ERROR);
 	if (keycode == 119)
 		game->player.move_up = 1;
 	if (keycode == 115)
@@ -26,7 +26,7 @@ static int	key_press(int keycode, t_game *game)
 		game->player.move_right = 1;
 	if (keycode == 65363)
 		game->player.rotate_left = 1;
-	if (keycode == 65361)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+	if (keycode == 65361)
 		game->player.rotate_right = 1;
 	return (0);
 }

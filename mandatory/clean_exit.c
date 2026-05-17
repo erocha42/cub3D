@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/13 19:07:12 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 14:32:57 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ static void	error_name_handling(t_error error_name)
 	if (error_name == IMG_ERROR)
 		ft_putstr_fd("Error:\n IMG error)\n", 2);
 	exit(1);
+}
+
+static void	clean_exit_2(t_game *game)
+{
+	if (game->trim)
+		free(game->trim);
+	if (game->mlx_ptr)
+	{
+		clean_sprites(game);
+		mlx_destroy_display(game->mlx_ptr);
+		free(game->mlx_ptr);
+	}
 }
 
 void	clean_exit(t_game *game, t_error error_name)
@@ -55,13 +67,6 @@ void	clean_exit(t_game *game, t_error error_name)
 		}
 		close(game->fd);
 	}
-	if (game->trim)
-		free(game->trim);
-	if (game->mlx_ptr)
-	{
-		clean_sprites(game);
-		mlx_destroy_display(game->mlx_ptr);
-		free(game->mlx_ptr);
-	}
+	clean_exit_2(game);
 	error_name_handling(error_name);
 }

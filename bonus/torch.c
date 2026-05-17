@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 14:23:16 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/08 16:26:55 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 16:04:24 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,17 @@ void	render_torch(t_game *game)
 {
 	int		x;
 	int		y;
-	int		dx;
-	int		dy;
 	int		dist_sq;
 	int		color;
 	double	intensity;
 
-	y = 0;
-	while (y < 1080)
+	y = -1;
+	while (++y < 1080)
 	{
-		dy = y - 540;
 		x = 0;
 		while (x < 1920)
 		{
-			dx = x - 960;
-			dist_sq = (dx * dx) + (dy * dy);
+			dist_sq = ((x - 960) * (x - 960)) + ((y - 540) * (y - 540));
 			if (dist_sq >= 250000)
 				my_mlx_pixel_put(game, x, y, 0x000000);
 			else if (dist_sq > 10000)
@@ -58,6 +54,5 @@ void	render_torch(t_game *game)
 			}
 			x++;
 		}
-		y++;
 	}
 }

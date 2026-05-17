@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/13 19:08:00 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 16:04:36 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,30 @@ static void	error_name_handling(t_error error_name)
 	if (error_name == IMG_ERROR)
 		ft_putstr_fd("Error:\n IMG error)\n", 2);
 	exit(1);
+}
+
+static void	clean_exit2(t_game *game)
+{
+	if (game->trim)
+		free(game->trim);
+	if (game->doors)
+		free(game->doors);
+	if (game->mlx_ptr)
+	{
+		clean_sprites(game);
+		mlx_destroy_display(game->mlx_ptr);
+		free(game->mlx_ptr);
+	}
+	if (game->has_audio == 1)
+	{
+		ma_sound_uninit(&game->monster_sound);
+		ma_engine_uninit(&game->audio_engine);
+	}
+	if (game->heatmap)
+	{
+		free_tab_int(game->heatmap, game->map_height);
+		game->heatmap = NULL;
+	}
 }
 
 void	clean_exit(t_game *game, t_error error_name)
@@ -55,25 +79,6 @@ void	clean_exit(t_game *game, t_error error_name)
 		}
 		close(game->fd);
 	}
-	if (game->trim)
-		free(game->trim);
-	if (game->doors)
-		free(game->doors);
-	if (game->mlx_ptr)
-	{
-		clean_sprites(game);
-		mlx_destroy_display(game->mlx_ptr);
-		free(game->mlx_ptr);
-	}
-	if (game->has_audio == 1)
-    {
-        ma_sound_uninit(&game->monster_sound);
-        ma_engine_uninit(&game->audio_engine);
-    }
-    if (game->heatmap)
-    {
-        free_tab_int(game->heatmap, game->map_height);
-        game->heatmap = NULL;
-    }
+	clean_exit2(game);
 	error_name_handling(error_name);
 }

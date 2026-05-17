@@ -53,6 +53,35 @@ typedef struct s_player
 	int			torch;
 }				t_player;
 
+typedef struct s_ray
+{
+	int			x;
+	int			y;
+	double		camerax;
+	double		raydirx;
+	double		raydiry;
+	int			mapx;
+	int			mapy;
+	double		sidedistx;
+	double		sidedisty;
+	double		deltadistx;
+	double		deltadisty;
+	double		perpwalldist;
+	int			stepx;
+	int			stepy;
+	int			hit;
+	int			side;
+	int			lineheight;
+	int			drawstart;
+	int			drawend;
+	double		wallx;
+	int			texx;
+	double		step;
+	double		texpos;
+	int			texy;
+	int			color;
+}				t_ray;
+
 typedef struct s_sprite
 {
 	double		x;
@@ -60,12 +89,59 @@ typedef struct s_sprite
 	int			texture;
 }				t_sprite;
 
-typedef	struct	s_doors
+typedef struct s_doors
 {
-	int	x;
-	int	y;
-	int	state;
+	int			x;
+	int			y;
+	int			state;
+	double		open_amount;
 }				t_doors;
+
+typedef struct s_sprite_cast
+{
+	double		spr_x;
+	double		spr_y;
+	double		invdet;
+	double		trans_x;
+	double		trans_y;
+	int			screen_x;
+	int			dim;
+	int			start_y;
+	int			end_y;
+	int			start_x;
+	int			end_x;
+}				t_sprite_cast;
+
+typedef struct s_raycast
+{
+	int			x;
+	int			y;
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	double		wall_x;
+	int			tex_x;
+	double		step;
+	double		tex_pos;
+	int			is_door;
+	int			door_idx;
+	double		hit_pos;
+	int			sky_offset_x;
+}				t_raycast;
 
 typedef struct s_game
 {
@@ -103,6 +179,7 @@ typedef struct s_game
 	int			**heatmap;
 	ma_engine	audio_engine;
 	ma_sound	monster_sound;
+	ma_sound	jumpscare_sound;
 	int			has_audio;
 }				t_game;
 
@@ -114,15 +191,23 @@ void			clean_sprites(t_game *game);
 void			clean_exit(t_game *game, t_error error_name);
 void			free_tab(char **tab, int limit);
 void			my_mlx_pixel_put(t_game *game, int x, int y, int color);
-void			minimap(t_game *game);
 int				raycasting(t_game *game);
 int				init_images(t_game *game);
 void			valid_map(t_game *game);
 void			init_player_cam(t_game *game);
+void			calc_line(t_game *game, t_ray *r);
+void			draw_column(t_game *game, t_ray *r);
+void			data_counter_init(int data_counter[]);
+char			*skip(char *line);
+void			data_recovery(t_game *game, char *line, int data_counter[]);
+int				search_longest(t_game *game);
+int				nbr_line(t_game *game, char *first_line);
+void			filler(t_game *game, size_t end_line, char *line, int line_nbr);
+int				ft_strisdigits(char *str);
+int				pass_line(int fd, char *line);
 
 // BONUS :
 
-void			minimap(t_game *game);
 void			mouse_hook(t_game *game);
 void			update_sprite(t_game *game);
 void			render_sprite(t_game *game);
@@ -130,10 +215,18 @@ int				get_tex_color(t_img *img, int x, int y);
 void			render_torch(t_game *game);
 void			free_tab_int(int **tab, int limit);
 void			bfs(t_game *game);
-void			get_next_step(t_game *game, int mx, int my, int *tx, int *ty);
+void			get_next_step(t_game *game, int mx, int my, int *t_xy);
 void			init_audio(t_game *game);
 void			heatmap(t_game *game);
 void			doors(t_game *game);
-
+int				door_idx(t_game *game, int x, int y);
+void			interact_door(t_game *game);
+int				is_walkable(t_game *game, double x, double y);
+void			update_doors_animation(t_game *game);
+void			my_mlx_pixel_put(t_game *game, int x, int y, int color);
+void			minimap(t_game *game);
+void			jumpscare(t_game *game);
+void			calc_projection(t_game *game, t_raycast *r);
+void			draw_vertical_line(t_game *game, t_raycast *r);
 
 #endif
