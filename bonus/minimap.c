@@ -6,7 +6,7 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 15:28:39 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/08 14:35:14 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/14 15:31:29 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,9 @@ static void	put_walls(t_game *game, int cam_x, int cam_y)
 static void	put_chars(t_game *game)
 {
 	int	color_player;
-	//int	color_monster;
 
 	color_player = color_recovery(game, "20,200,0");
-	//color_monster = color_recovery(game, "200,0,0");
 	put_square(game, (int)game->player.x, (int)game->player.y, color_player);
-	//put_square(game, 1, 1, color_monster);
 }
 
 static void update_minimap_camera(t_game *game)

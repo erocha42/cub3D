@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BFS.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 16:41:30 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 15:28:46 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:31:21 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	bfs(t_game *game)
 
 	first = 0;
 	last = 0;
-	if (!game->heatmap)
+	if (!game->heatmap || game->sprite.x == -1)
 		return ;
 	game->heatmap[(int)game->player.y][(int)game->player.x] = 0;
 	queue = malloc((game->map_height * game->map_width) * sizeof(int));

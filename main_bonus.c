@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:07:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:37:12 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ int	game_loop(t_game *game)
 			* cos(RotSpeed);
 	}
 	mouse_hook(game);
-	update_sprite(game);
+	if (game->sprite.x != -1)
+		update_sprite(game);
 	raycasting(game);
 	return (0);
 }
@@ -160,7 +161,8 @@ int	main(int ac, char *av[])
 		return (0);
 	if (init_images(&game) == 0)
 		return (0);
-	init_audio(&game);
+	if (game.sprite.x != -1)
+		init_audio(&game);
 	mlx_hook(game.win_ptr, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win_ptr, 3, 1L << 1, key_release, &game);
 	mlx_mouse_hide(game.mlx_ptr, game.win_ptr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:54:13 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:06:23 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:10:12 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ int	init_images(t_game *game)
 		clean_exit(game, NO_ERROR);
 	game->tex_d.addr = mlx_get_data_addr(game->tex_d.img, &game->tex_d.bpp,
 			&game->tex_d.line_len, &game->tex_d.endian);
-	printf("tex_d: width=%d height=%d\n", game->tex_d.width,
-		game->tex_d.height);
 	game->tex_w.addr = mlx_get_data_addr(game->tex_w.img, &game->tex_w.bpp,
 			&game->tex_w.line_len, &game->tex_w.endian);
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:06:29 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:15:05 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	init_game(t_game *game)
 
 void	init_player_cam(t_game *game)
 {
+	game->cam_x = game->player.x;
+	game->cam_y = game->player.y;
 	if (game->direction_player == 'N')
 	{
 		game->player.dir_x = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 18:57:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:42:09 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,8 @@ static void	mapper(t_game *game, char *first_line)
 	i = 0;
 	line = first_line;
 	game->map = malloc(sizeof(char *) * nbr_line(game, first_line));
+	if (!game->map)
+		clean_exit(game, MAP_ERROR);
 	while (line)
 	{
 		line_trimed = ft_strtrim(line, "\n");

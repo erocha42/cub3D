@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 12:55:40 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 19:10:39 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:03:37 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,9 +227,11 @@ int	raycasting(t_game *game)
 		}
 		x++;
 	}
-	render_sprite(game);
+	if (game->sprite.x != -1)
+		render_sprite(game);
 	if (game->player.torch == 0)
 		render_torch(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->screen.img, 0,
 		0);
 	return (1);

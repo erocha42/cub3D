@@ -6,7 +6,7 @@
 /*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/13 18:41:08 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:58:35 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,21 @@ static char	*search_map(t_game *game)
 	return (NULL);
 }
 
+static int	pass_line(int fd, char *line)
+{
+	int	nbr_line;
+
+	nbr_line = 0;
+	while (line)
+	{
+		nbr_line++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	return (nbr_line);
+}
+
 static int	nbr_line(t_game *game, char *first_line)
 {
 	int		nbr_line;
@@ -200,13 +215,7 @@ static int	nbr_line(t_game *game, char *first_line)
 		close(fd);
 		clean_exit(game, MALLOC_ERROR);
 	}
-	while (line)
-	{
-		nbr_line++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
+	nbr_line = pass_line(fd, line);
 	close(fd);
 	return (nbr_line);
 }
@@ -238,7 +247,20 @@ static int	search_longest(t_game *game)
 	return (longest);
 }
 
-static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
+static void	player_update(t_game *game, char *line, int line_nbr, int i)
+{
+	if (game->player.x != -1)
+	{
+		free(line);
+		clean_exit(game, MAP_ERROR);
+	}
+	game->player.y = line_nbr + 0.5;
+	game->player.x = i + 0.5;
+	game->map[line_nbr][i] = line[i];
+	game->direction_player = line[i];
+}
+
+static void	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 {
 	size_t	i;
 
@@ -249,14 +271,7 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 			game->map[line_nbr][i] = ' ';
 		else if (line[i] == 'N' || line[i] == 'W' || line[i] == 'E'
 			|| line[i] == 'S')
-		{
-			if (game->player.x != -1)
-				return(0);
-			game->player.y = line_nbr + 0.5;
-			game->player.x = i + 0.5;
-			game->map[line_nbr][i] = line[i];
-			game->direction_player = line[i];
-		}
+			player_update(game, line, line_nbr, i);
 		else if (!ft_isprint(line[i]))
 			game->map[line_nbr][i] = ' ';
 		else if (line[i] == '1' || line[i] == '0')
@@ -264,12 +279,11 @@ static int	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 		else
 		{
 			game->map[line_nbr][i] = '\0';
-			return(0);
+			clean_exit(game, MAP_ERROR);
 		}
 		i++;
 	}
 	game->map[line_nbr][i] = '\0';
-	return(1);
 }
 
 static void	mapper(t_game *game, char *first_line)
@@ -282,6 +296,8 @@ static void	mapper(t_game *game, char *first_line)
 	i = 0;
 	line = first_line;
 	game->map = malloc(sizeof(char *) * nbr_line(game, first_line));
+	if (!game->map)
+		clean_exit(game, MAP_ERROR);
 	while (line)
 	{
 		line_trimed = ft_strtrim(line, "\n");
@@ -290,11 +306,7 @@ static void	mapper(t_game *game, char *first_line)
 		if (!game->map[i])
 			clean_exit(game, MALLOC_ERROR);
 		game->map_height++;
-		if (filler(game, game->map_width - 1, line_trimed, i) == 0)
-		{
-			free(line_trimed);
-			clean_exit(game, MAP_ERROR);
-		}
+		filler(game, game->map_width - 1, line_trimed, i);
 		i++;
 		free(line_trimed);
 		line = get_next_line(game->fd);
