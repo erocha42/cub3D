@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/17 20:24:56 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/18 13:45:21 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,7 @@ static int	key_press(int keycode, t_game *game)
 	if (keycode == 65505)
 		game->player.sprint = 1;
 	if (keycode == 102)
-	{
-		if (game->player.torch == 1)
-			game->player.torch = 0;
-		else
-			game->player.torch = 1;
-	}
+		game->player.torch = !game->player.torch;
 	if (keycode == 101)
 		interact_door(game);
 	return (0);
@@ -63,79 +58,21 @@ static int	key_release(int keycode, t_game *game)
 
 int	game_loop(t_game *game)
 {
-	double	MoveSpeed;
-	double	RotSpeed;
-	double	OldDirX;
-	double	OldPlaneX;
+	double	move_speed;
 
-	MoveSpeed = 0.1;
-	if (game->player.sprint == 1)
-		MoveSpeed = 0.18;
-	if (game->player.torch == 1)
-		MoveSpeed = MoveSpeed / 1.5;
-	RotSpeed = 0.1;
+	move_speed = get_move_speed(game);
 	if (game->player.move_up == 1)
-	{
-		if (is_walkable(game, game->player.x + game->player.dir_x * MoveSpeed,
-				game->player.y))
-			game->player.x += game->player.dir_x * MoveSpeed;
-		if (is_walkable(game, game->player.x, game->player.y
-				+ game->player.dir_y * MoveSpeed))
-			game->player.y += game->player.dir_y * MoveSpeed;
-	}
+		move_fb(game, move_speed);
 	if (game->player.move_down == 1)
-	{
-		if (is_walkable(game, game->player.x - game->player.dir_x * MoveSpeed,
-				game->player.y))
-			game->player.x -= game->player.dir_x * MoveSpeed;
-		if (is_walkable(game, game->player.x, game->player.y
-				- game->player.dir_y * MoveSpeed))
-			game->player.y -= game->player.dir_y * MoveSpeed;
-	}
+		move_fb(game, -move_speed);
 	if (game->player.move_left == 1)
-	{
-		if (is_walkable(game, game->player.x + game->player.dir_y * MoveSpeed,
-				game->player.y))
-			game->player.x += game->player.dir_y * MoveSpeed;
-		if (is_walkable(game, game->player.x, game->player.y
-				- game->player.dir_x * MoveSpeed))
-			game->player.y -= game->player.dir_x * MoveSpeed;
-	}
+		move_lr(game, move_speed);
 	if (game->player.move_right == 1)
-	{
-		if (is_walkable(game, game->player.x - game->player.dir_y * MoveSpeed,
-				game->player.y))
-			game->player.x -= game->player.dir_y * MoveSpeed;
-		if (is_walkable(game, game->player.x, game->player.y
-				+ game->player.dir_x * MoveSpeed))
-			game->player.y += game->player.dir_x * MoveSpeed;
-	}
+		move_lr(game, -move_speed);
 	if (game->player.rotate_left == 1)
-	{
-		OldDirX = game->player.dir_x;
-		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			- game->player.dir_y * sin(RotSpeed);
-		game->player.dir_y = OldDirX * sin(RotSpeed) + game->player.dir_y
-			* cos(RotSpeed);
-		OldPlaneX = game->player.plane_x;
-		game->player.plane_x = game->player.plane_x * cos(RotSpeed)
-			- game->player.plane_y * sin(RotSpeed);
-		game->player.plane_y = OldPlaneX * sin(RotSpeed) + game->player.plane_y
-			* cos(RotSpeed);
-	}
+		rotate_player_key(game, 0.1);
 	if (game->player.rotate_right == 1)
-	{
-		OldDirX = game->player.dir_x;
-		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			+ game->player.dir_y * sin(RotSpeed);
-		game->player.dir_y = -OldDirX * sin(RotSpeed) + game->player.dir_y
-			* cos(RotSpeed);
-		OldPlaneX = game->player.plane_x;
-		game->player.plane_x = game->player.plane_x * cos(RotSpeed)
-			+ game->player.plane_y * sin(RotSpeed);
-		game->player.plane_y = -OldPlaneX * sin(RotSpeed) + game->player.plane_y
-			* cos(RotSpeed);
-	}
+		rotate_player_key(game, -0.1);
 	mouse_hook(game);
 	if (game->sprite.x != -1)
 		update_sprite(game);
@@ -150,19 +87,14 @@ int	main(int ac, char *av[])
 
 	if (ac != 2)
 	{
-		if (ac < 2)
-			ft_putstr_fd("Error: Not Enough Arguments\n", 2);
-		else
-			ft_putstr_fd("Error: Too Many Arguments\n", 2);
+		ft_putstr_fd("Error:\n Bad Number Of Arguments\n", 2);
 		return (0);
 	}
 	init_game(&game);
 	parsing(av, &game);
 	doors(&game);
 	init_player_cam(&game);
-	if (init_mlx(&game) == 0)
-		return (0);
-	if (init_images(&game) == 0)
+	if (init_mlx(&game) == 0 || init_images(&game) == 0)
 		return (0);
 	if (game.sprite.x != -1)
 		init_audio(&game);

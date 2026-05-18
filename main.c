@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:43:23 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/15 13:09:55 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/18 13:50:31 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,75 +50,18 @@ static int	key_release(int keycode, t_game *game)
 
 int	game_loop(t_game *game)
 {
-	double	MoveSpeed;
-	double	RotSpeed;
-	double	OldDirX;
-	double	OldPlaneX;
-
-	MoveSpeed = 0.1;
-	RotSpeed = 0.1;
 	if (game->player.move_up == 1)
-	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				+ game->player.dir_x * MoveSpeed)] != '1')
-			game->player.x += game->player.dir_x * MoveSpeed;
-		if (game->map[(int)(game->player.y + game->player.dir_y
-				* MoveSpeed)][(int)game->player.x] != '1')
-			game->player.y += game->player.dir_y * MoveSpeed;
-	}
+		move_fb(game, 0.1);
 	if (game->player.move_down == 1)
-	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				- game->player.dir_x * MoveSpeed)] != '1')
-			game->player.x -= game->player.dir_x * MoveSpeed;
-		if (game->map[(int)(game->player.y - game->player.dir_y
-				* MoveSpeed)][(int)game->player.x] != '1')
-			game->player.y -= game->player.dir_y * MoveSpeed;
-	}
+		move_fb(game, -0.1);
 	if (game->player.move_left == 1)
-	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				+ game->player.dir_y * MoveSpeed)] != '1')
-			game->player.x += game->player.dir_y * MoveSpeed;
-		if (game->map[(int)(game->player.y - game->player.dir_x
-				* MoveSpeed)][(int)game->player.x] != '1')
-			game->player.y -= game->player.dir_x * MoveSpeed;
-	}
+		move_lr(game, 0.1);
 	if (game->player.move_right == 1)
-	{
-		if (game->map[(int)game->player.y][(int)(game->player.x
-				- game->player.dir_y * MoveSpeed)] != '1')
-			game->player.x -= game->player.dir_y * MoveSpeed;
-		if (game->map[(int)(game->player.y + game->player.dir_x
-				* MoveSpeed)][(int)game->player.x] != '1')
-			game->player.y += game->player.dir_x * MoveSpeed;
-	}
+		move_lr(game, -0.1);
 	if (game->player.rotate_left == 1)
-	{
-		OldDirX = game->player.dir_x;
-		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			- game->player.dir_y * sin(RotSpeed);
-		game->player.dir_y = OldDirX * sin(RotSpeed) + game->player.dir_y
-			* cos(RotSpeed);
-		OldPlaneX = game->player.plane_x;
-		game->player.plane_x = game->player.plane_x * cos(RotSpeed)
-			- game->player.plane_y * sin(RotSpeed);
-		game->player.plane_y = OldPlaneX * sin(RotSpeed) + game->player.plane_y
-			* cos(RotSpeed);
-	}
+		rotate_player_key(game, 0.1);
 	if (game->player.rotate_right == 1)
-	{
-		OldDirX = game->player.dir_x;
-		game->player.dir_x = game->player.dir_x * cos(RotSpeed)
-			+ game->player.dir_y * sin(RotSpeed);
-		game->player.dir_y = -OldDirX * sin(RotSpeed) + game->player.dir_y
-			* cos(RotSpeed);
-		OldPlaneX = game->player.plane_x;
-		game->player.plane_x = game->player.plane_x * cos(RotSpeed)
-			+ game->player.plane_y * sin(RotSpeed);
-		game->player.plane_y = -OldPlaneX * sin(RotSpeed) + game->player.plane_y
-			* cos(RotSpeed);
-	}
+		rotate_player_key(game, -0.1);
 	raycasting(game);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:36:50 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/15 13:43:33 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/18 13:29:27 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ void	init_audio(t_game *game)
 	game->has_audio = 0;
 	if (ma_engine_init(NULL, &game->audio_engine) != MA_SUCCESS)
 		return ;
-	result = ma_sound_init_from_file(&game->audio_engine, "./GMT.wav", 0, NULL,
-			NULL, &game->monster_sound);
-	result2 = ma_sound_init_from_file(&game->audio_engine, "./oh-tgl-prof.wav",
-			0, NULL, NULL, &game->jumpscare_sound);
+	result = ma_sound_init_from_file(&game->audio_engine,
+			"./resources/audios/GMT.wav", 0, NULL, NULL, &game->monster_sound);
+	result2 = ma_sound_init_from_file(&game->audio_engine,
+			"./resources/audios/oh-tgl-prof.wav", 0, NULL, NULL,
+			&game->jumpscare_sound);
 	if (result != MA_SUCCESS || result2 != MA_SUCCESS)
 	{
 		ma_engine_uninit(&game->audio_engine);

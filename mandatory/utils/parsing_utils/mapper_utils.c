@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapper_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 18:22:55 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/17 19:38:12 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/18 12:53:49 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	search_longest(t_game *game)
 	return (longest);
 }
 
-static int	pass_line(int fd, char *line)
+int	pass_line(int fd, char *line)
 {
 	int	nbr_line;
 

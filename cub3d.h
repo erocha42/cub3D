@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/18 13:57:55 by mchesnea          #+#    #+#             */
+/*   Updated: 2026/05/18 13:57:57 by mchesnea         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -205,6 +217,9 @@ int				nbr_line(t_game *game, char *first_line);
 void			filler(t_game *game, size_t end_line, char *line, int line_nbr);
 int				ft_strisdigits(char *str);
 int				pass_line(int fd, char *line);
+void			rotate_player_key(t_game *game, double rot);
+void			move_lr(t_game *game, double speed);
+void			move_fb(t_game *game, double speed);
 
 // BONUS :
 
@@ -228,5 +243,9 @@ void			minimap(t_game *game);
 void			jumpscare(t_game *game);
 void			calc_projection(t_game *game, t_raycast *r);
 void			draw_vertical_line(t_game *game, t_raycast *r);
+void			rotate_player_key(t_game *game, double rot);
+void			move_lr(t_game *game, double speed);
+void			move_fb(t_game *game, double speed);
+double			get_move_speed(t_game *game);
 
 #endif
