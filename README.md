@@ -4,7 +4,7 @@
 
 ![Norminette](https://img.shields.io/badge/norminette-passing-success?style=flat-square) ![Score](https://img.shields.io/badge/score-...%2F100-brightgreen?style=flat-square) ![Language](https://img.shields.io/badge/language-C-blue?style=flat-square)
 
-![cub3D Preview](https://user-images.githubusercontent.com/21006147/190404961-988cedf9-bed6-417f-bed3-eb5dc2b7afda.png)
+![cub3D Preview](https://github.com/user-attachments/assets/07853942-57dc-4631-ba8c-69a80e4f25a2)
 
 ## Description
 
@@ -28,6 +28,7 @@ Key concepts learned include:
 * **Mouse Control**: Smooth camera rotation using the mouse (look around).
 * **Ceiling and FlashLight**: Textured ceilings and FlashLight for better immersion.
 * **Sprint**: Speed bursts to escape enemies.
+* **Music**: Add song and jumpscare for atmosphere.
 
 ## Instructions
 
