@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:57:55 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/18 13:57:57 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/18 18:22:54 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ typedef struct s_game
 	ma_engine	audio_engine;
 	ma_sound	monster_sound;
 	ma_sound	jumpscare_sound;
+	ma_sound	step_sound;
 	int			has_audio;
 }				t_game;
 

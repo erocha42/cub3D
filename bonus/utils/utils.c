@@ -6,24 +6,11 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:23:18 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/15 16:17:51 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/18 18:21:45 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	free_tab(char **tab, int limit)
-{
-	int	i;
-
-	i = 0;
-	while (i < limit)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
 
 void	free_tab_int(int **tab, int limit)
 {
@@ -53,30 +40,49 @@ int	is_walkable(t_game *game, double x, double y)
 	return (1);
 }
 
+static int	allocate_heatmap(t_game *game)
+{
+	int	i;
+
+	game->heatmap = malloc(sizeof(int *) * game->map_height);
+	if (!game->heatmap)
+		return (0);
+	i = 0;
+	while (i < game->map_height)
+	{
+		game->heatmap[i] = malloc(sizeof(int) * game->map_width);
+		if (!game->heatmap[i])
+		{
+			free_tab_int(game->heatmap, i);
+			game->heatmap = NULL;
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 void	heatmap(t_game *game)
 {
 	int	i;
 	int	j;
 
-	i = 0;
-	game->heatmap = malloc(sizeof(int *) * game->map_height);
 	if (!game->heatmap)
-		return ;
+	{
+		if (!allocate_heatmap(game))
+			return ;
+	}
+	i = 0;
 	while (i < game->map_height)
 	{
 		j = 0;
-		game->heatmap[i] = malloc(sizeof(int) * game->map_width);
-		if (!game->heatmap[i])
-		{
-			free_tab_int(game->heatmap, i);
-			return ;
-		}
 		while (j < game->map_width)
 		{
 			if (is_walkable(game, j, i) == 1)
-				game->heatmap[i][j++] = -1;
+				game->heatmap[i][j] = -1;
 			else
-				game->heatmap[i][j++] = -2;
+				game->heatmap[i][j] = -2;
+			j++;
 		}
 		i++;
 	}

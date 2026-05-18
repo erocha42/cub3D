@@ -1,0 +1,162 @@
+{
+   Ignore_MLX_Writev_Uninitialised
+   Memcheck:Param
+   writev(vector[...])
+   fun:writev
+   obj:*libxcb*
+   obj:*libX11*
+}
+{
+   Ignore_MLX_Reachable_Internal
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*libX11*
+   obj:*libxcb*
+   obj:*libXext*
+   obj:*libXcursor*
+}
+{
+   Ignore_MLX_Init_And_Mouse
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:mlx_*
+}
+{
+   Ignore_Miniaudio_Threads_And_Leaks
+   Memcheck:Leak
+   match-leak-kinds: possible,reachable
+   ...
+   obj:*miniaudio*
+}
+{
+   Ignore_Miniaudio_InvalidRead_Acquire
+   Memcheck:Addr4
+   fun:*ma_resource_manager_data_buffer_node_acquire*
+   ...
+}
+{
+   Ignore_DL_Loader_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_open
+}
+{
+   Ignore_X11_Realloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   ...
+   obj:*libX11.so*
+}
+{
+   Ignore_Miniaudio_Acquire
+   Memcheck:Addr4
+   fun:*ma_resource_manager_data_buffer_node_acquire*
+   ...
+}
+{
+   Ignore_MLX_WriteV
+   Memcheck:Param
+   writev(vector[...])
+   ...
+   obj:*libxcb*
+}
+{
+   Ignore_MLX_WriteV_X11
+   Memcheck:Param
+   writev(vector[...])
+   ...
+   obj:*libX11*
+}
+{
+   Ignore_Miniaudio_InvalidRead_Acquire
+   Memcheck:Addr4
+   fun:ma_resource_manager_data_buffer_node_acquire
+   ...
+}
+{
+   Ignore_Miniaudio_InvalidRead
+   Memcheck:Addr4
+   fun:ma_resource_manager_data_buffer_node_acquire
+   ...
+}
+{
+   Ignore_Miniaudio_InvalidRead_Init
+   Memcheck:Addr4
+   fun:ma_resource_manager_data_buffer_init_ex_internal
+   ...
+}
+{
+   Ignore_MLX_Init_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:mlx_init
+   ...
+}
+{
+   Ignore_Miniaudio_Threads
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   ...
+   fun:pthread_create*
+   ...
+   obj:*miniaudio*
+}
+{
+   Ignore_Miniaudio_Init
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   fun:ma_device_init_ex
+   ...
+}
+{
+   Ignore_X11_Reachable_Malloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   obj:*libX11.so*
+}
+{
+   Ignore_X11_Reachable_Calloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   ...
+   obj:*libX11.so*
+}
+{
+   Ignore_Xcursor_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*libXcursor.so*
+}
+{
+   Ignore_Xext_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*libXext.so*
+}
+{
+   Ignore_Xcb_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*libxcb.so*
+}
+{
+   Ignore_DL_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_open
+}

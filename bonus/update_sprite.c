@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:00:39 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/15 16:04:23 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/18 18:28:44 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	update_sprite(t_game *game)
 	double	target[2];
 
 	check_jumpscare(game);
-	if (game->heatmap)
-		free_tab_int(game->heatmap, game->map_height);
 	heatmap(game);
 	bfs(game);
 	update_monster_audio(game);

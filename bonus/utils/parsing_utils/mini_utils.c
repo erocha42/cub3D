@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 18:45:53 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/17 20:21:50 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/18 18:21:52 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,17 @@ int	pass_line(int fd, char *line)
 	}
 	free(line);
 	return (nbr_line);
+}
+
+void	free_tab(char **tab, int limit)
+{
+	int	i;
+
+	i = 0;
+	while (i < limit)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

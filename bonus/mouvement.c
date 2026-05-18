@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:37:56 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/18 13:54:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/18 18:33:08 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	move_fb(t_game *game, double speed)
 	if (is_walkable(game, game->player.x, game->player.y + game->player.dir_y
 			* speed))
 		game->player.y += game->player.dir_y * speed;
+	if (game->has_audio == 1)
+	{
+		ma_sound_start(&game->step_sound);
+		ma_sound_set_volume(&game->step_sound, 5);
+	}
 }
 
 void	move_lr(t_game *game, double speed)
@@ -42,6 +47,11 @@ void	move_lr(t_game *game, double speed)
 	if (is_walkable(game, game->player.x, game->player.y - game->player.dir_x
 			* speed))
 		game->player.y -= game->player.dir_x * speed;
+	if (game->has_audio == 1)
+	{
+		ma_sound_start(&game->step_sound);
+		ma_sound_set_volume(&game->step_sound, 5);
+	}
 }
 
 void	rotate_player_key(t_game *game, double rot)

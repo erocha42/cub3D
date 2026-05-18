@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/15 16:04:36 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/18 18:21:12 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,43 @@ static void	error_name_handling(t_error error_name)
 	exit(1);
 }
 
+static void	clean_mlx_ptrs(t_game *game)
+{
+	clean_sprites(game);
+	if (game->screen.img)
+		mlx_destroy_image(game->mlx_ptr, game->screen.img);
+	if (game->tex_sprite.img)
+		mlx_destroy_image(game->mlx_ptr, game->tex_sprite.img);
+	if (game->sky_img.img)
+		mlx_destroy_image(game->mlx_ptr, game->sky_img.img);
+	if (game->tex_d.img)
+		mlx_destroy_image(game->mlx_ptr, game->tex_d.img);
+	if (game->win_ptr)
+		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	mlx_destroy_display(game->mlx_ptr);
+	free(game->mlx_ptr);
+}
+
 static void	clean_exit2(t_game *game)
 {
 	if (game->trim)
 		free(game->trim);
 	if (game->doors)
 		free(game->doors);
-	if (game->mlx_ptr)
-	{
-		clean_sprites(game);
-		mlx_destroy_display(game->mlx_ptr);
-		free(game->mlx_ptr);
-	}
-	if (game->has_audio == 1)
-	{
-		ma_sound_uninit(&game->monster_sound);
-		ma_engine_uninit(&game->audio_engine);
-	}
 	if (game->heatmap)
 	{
 		free_tab_int(game->heatmap, game->map_height);
 		game->heatmap = NULL;
 	}
+	if (game->has_audio == 1)
+	{
+		ma_sound_uninit(&game->monster_sound);
+		ma_sound_uninit(&game->step_sound);
+		ma_sound_uninit(&game->jumpscare_sound);
+		ma_engine_uninit(&game->audio_engine);
+	}
+	if (game->mlx_ptr)
+		clean_mlx_ptrs(game);
 }
 
 void	clean_exit(t_game *game, t_error error_name)
