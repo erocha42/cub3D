@@ -64,3 +64,16 @@ make bonus
 | **`E`** | Interact (Open/close doors) |
 | **`R`** | FlashLight (Active/Disable Flash) |
 | **`Left Shift`** | Sprint (Evade Nextbots) |
+
+### Resources
+
+## Resources
+
+* **Lode's Raycasting Tutorial**: The primary reference for understanding the DDA algorithm and texture mapping mathematics.
+* **Wolfenstein 3D (1992)**: The classic reference for 2.5D rendering styles and early FPS mechanics.
+* **42 Docs / MiniLibX**: Official technical documentation for window management and pixel manipulation.
+
+## AI Usage
+
+* **Documentation**: Structuring and translating the project documentation to meet 42 standards.
+* **Problem Solving**: Identifying and debugging issues within event handling and ensuring memory management remained leak-free.
