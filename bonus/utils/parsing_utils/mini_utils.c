@@ -6,11 +6,21 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 18:45:53 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/18 18:21:52 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:36:24 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+char	*skip(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && (!ft_isprint(line[i]) || line[i] == ' '))
+		i++;
+	return (&line[i]);
+}
 
 int	ft_strisdigits(char *str)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/17 20:25:59 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:02:36 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,24 @@
 static void	data_handling(t_game *game)
 {
 	char	*line;
+	char	*temp_check;
 	int		data_ctr[6];
 
 	data_counter_init(data_ctr);
 	line = get_next_line(game->fd);
-	while (line && (!data_ctr[0] || !data_ctr[1] || !data_ctr[2]
-			|| !data_ctr[3] || !data_ctr[4] || !data_ctr[5]))
+	while (line && (!data_ctr[0] || !data_ctr[1] || !data_ctr[2] || !data_ctr[3]
+			|| !data_ctr[4] || !data_ctr[5]))
 	{
-		if (!line[0] || line[0] == '\n')
+		temp_check = ft_strtrim(line, " \t\n");
+		if (!temp_check || temp_check[0] == '\0')
 		{
+			if (temp_check)
+				free(temp_check);
 			free(line);
 			line = get_next_line(game->fd);
 			continue ;
 		}
+		free(temp_check);
 		game->trim = ft_strtrim(line, "\n");
 		free(line);
 		if (data_ctr[0] > 2 || data_ctr[1] > 2 || data_ctr[2] > 2
@@ -66,7 +71,6 @@ static char	*search_map(t_game *game)
 static void	mapper(t_game *game, char *first_line)
 {
 	char	*line;
-	char	*line_trimed;
 	int		i;
 
 	game->map_width = search_longest(game);
@@ -77,15 +81,16 @@ static void	mapper(t_game *game, char *first_line)
 		clean_exit(game, MAP_ERROR);
 	while (line)
 	{
-		line_trimed = ft_strtrim(line, "\n");
+		game->trim = ft_strtrim(line, "\n");
 		free(line);
-		game->map[i] = malloc(sizeof(char) * game->map_width);
+		game->map[i] = malloc(sizeof(char) * (game->map_width + 1));
 		if (!game->map[i])
 			clean_exit(game, MALLOC_ERROR);
 		game->map_height++;
-		filler(game, game->map_width - 1, line_trimed, i);
+		filler(game, game->map_width, game->trim, i);
 		i++;
-		free(line_trimed);
+		free(game->trim);
+		game->trim = NULL;
 		line = get_next_line(game->fd);
 	}
 	free(line);

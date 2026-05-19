@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/15 14:32:57 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/19 14:50:37 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	clean_exit_2(t_game *game)
 		free(game->trim);
 	if (game->mlx_ptr)
 	{
+		if (game->screen.img)
+			mlx_destroy_image(game->mlx_ptr, game->screen.img);
 		clean_sprites(game);
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);

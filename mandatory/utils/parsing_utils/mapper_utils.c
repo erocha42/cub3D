@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 18:22:55 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/18 12:53:49 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/19 14:53:24 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ int	nbr_line(t_game *game, char *first_line)
 static void	player_update(t_game *game, char *line, int line_nbr, int i)
 {
 	if (game->player.x != -1)
-	{
-		free(line);
 		clean_exit(game, MAP_ERROR);
-	}
 	game->player.y = line_nbr + 0.5;
 	game->player.x = i + 0.5;
 	game->map[line_nbr][i] = line[i];

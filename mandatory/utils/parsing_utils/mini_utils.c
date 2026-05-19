@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 18:45:53 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/17 18:56:35 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:37:06 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,14 @@ void	data_counter_init(int data_counter[])
 	data_counter[3] = 0;
 	data_counter[4] = 0;
 	data_counter[5] = 0;
+}
+
+char	*skip(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && (!ft_isprint(line[i]) || line[i] == ' '))
+		i++;
+	return (&line[i]);
 }

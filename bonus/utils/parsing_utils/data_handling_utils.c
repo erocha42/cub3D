@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_handling_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 19:15:18 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/17 20:25:15 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:13:45 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,35 @@ static int	path_checker(t_game *game, char *path)
 	return (1);
 }
 
-char	*skip(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && (!ft_isprint(line[i]) || line[i] == ' '))
-		i++;
-	return (&line[i]);
-}
-
 int	color_recovery(t_game *game, char *line)
 {
 	int		i;
-	int		color[3];
+	int		c[3];
 	char	**tab;
 
 	tab = ft_split(line, ',');
+	if (!tab)
+		clean_exit(game, MALLOC_ERROR);
 	i = 0;
 	while (tab[i])
+		i++;
+	if (i != 3)
 	{
-		color[i] = ft_atoi(tab[i]);
-		if (!ft_strisdigits(tab[i]) || color[i] > 255 || color[i] < 0)
+		free_tab(tab, i);
+		clean_exit(game, DATA_ERROR);
+	}
+	i = -1;
+	while (++i < 3)
+	{
+		c[i] = ft_atoi(tab[i]);
+		if (!ft_strisdigits(tab[i]) || c[i] > 255 || c[i] < 0)
 		{
 			free_tab(tab, 3);
 			clean_exit(game, DATA_ERROR);
 		}
-		i++;
 	}
 	free_tab(tab, 3);
-	return (color[0] << 16 | color[1] << 8 | color[2]);
+	return (c[0] << 16 | c[1] << 8 | c[2]);
 }
 
 static void	g_c_recovery(t_game *game, char *line, int data_counter[])
@@ -74,31 +73,27 @@ static void	g_c_recovery(t_game *game, char *line, int data_counter[])
 		clean_exit(game, DATA_ERROR);
 }
 
+static void	set_path(char **game_path, int *counter, char *arg)
+{
+	(*counter)++;
+	if (*game_path)
+		free(*game_path);
+	*game_path = ft_strdup(arg);
+}
+
 void	data_recovery(t_game *game, char *line, int data_counter[])
 {
 	char	*arg;
 
 	arg = skip(&line[2]);
-	if (!ft_strncmp(&line[0], "NO", 2) && path_checker(game, arg))
-	{
-		data_counter[0]++;
-		game->n_path = ft_strdup(arg);
-	}
-	else if (!ft_strncmp(&line[0], "EA", 2) && path_checker(game, arg))
-	{
-		data_counter[1]++;
-		game->e_path = ft_strdup(arg);
-	}
-	else if (!ft_strncmp(&line[0], "SO", 2) && path_checker(game, arg))
-	{
-		data_counter[2]++;
-		game->s_path = ft_strdup(arg);
-	}
-	else if (!ft_strncmp(&line[0], "WE", 2) && path_checker(game, arg))
-	{
-		data_counter[3]++;
-		game->w_path = ft_strdup(arg);
-	}
+	if (!ft_strncmp(line, "NO", 2) && path_checker(game, arg))
+		set_path(&game->n_path, &data_counter[0], arg);
+	else if (!ft_strncmp(line, "EA", 2) && path_checker(game, arg))
+		set_path(&game->e_path, &data_counter[1], arg);
+	else if (!ft_strncmp(line, "SO", 2) && path_checker(game, arg))
+		set_path(&game->s_path, &data_counter[2], arg);
+	else if (!ft_strncmp(line, "WE", 2) && path_checker(game, arg))
+		set_path(&game->w_path, &data_counter[3], arg);
 	else
 		g_c_recovery(game, line, data_counter);
 }

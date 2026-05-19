@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/17 20:25:39 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/19 14:23:35 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	init_game(t_game *game)
 	game->w_path = NULL;
 	game->e_path = NULL;
 	game->direction_player = '\0';
+	game->doors = NULL;
+	game->has_audio = 0;
 	init_player_state(game);
 }
 

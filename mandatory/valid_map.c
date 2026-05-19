@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:15:37 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/04 14:12:18 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/19 15:06:58 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	**map_cpy(t_game *game)
 
 static void	flood_fill(t_game *game, char **grid, int y, int x)
 {
-	if (y < 0 || x < 0 || y >= game->map_height - 1 || x >= game->map_width - 1)
+	if (y < 0 || x < 0 || y >= game->map_height || x >= game->map_width)
 	{
 		free_tab(grid, game->map_height);
 		clean_exit(game, MAP_ERROR);
@@ -52,15 +52,13 @@ static void	flood_fill(t_game *game, char **grid, int y, int x)
 		free_tab(grid, game->map_height);
 		clean_exit(game, MAP_ERROR);
 	}
+	if (grid[y][x] == '1' || grid[y][x] == 'X')
+		return ;
 	grid[y][x] = 'X';
-	if (grid[y - 1][x] != '1' && grid[y - 1][x] != 'X')
-		flood_fill(game, grid, y - 1, x);
-	if (grid[y][x + 1] != '1' && grid[y][x + 1] != 'X')
-		flood_fill(game, grid, y, x + 1);
-	if (grid[y + 1][x] != '1' && grid[y + 1][x] != 'X')
-		flood_fill(game, grid, y + 1, x);
-	if (grid[y][x - 1] != '1' && grid[y][x - 1] != 'X')
-		flood_fill(game, grid, y, x - 1);
+	flood_fill(game, grid, y - 1, x);
+	flood_fill(game, grid, y + 1, x);
+	flood_fill(game, grid, y, x - 1);
+	flood_fill(game, grid, y, x + 1);
 	return ;
 }
 

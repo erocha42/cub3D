@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 10:53:39 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/04/28 16:44:19 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:09:19 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,31 @@ static int	check_if_set(char const *s, char const *set, int t)
 {
 	int	i;
 	int	j;
+	int	match;
 
-	i = 0;
 	if (t == 0)
 		j = 0;
 	else
 		j = ft_strlen(s) - 1;
-	while (set[i])
+	while (j >= 0 && s[j])
 	{
-		if (set[i] == s[j])
+		i = 0;
+		match = 0;
+		while (set[i])
 		{
-			if (t == 0)
-				j++;
-			else
-				j--;
-			i = 0;
-		}
-		else
+			if (set[i] == s[j])
+			{
+				match = 1;
+				break ;
+			}
 			i++;
+		}
+		if (match == 0)
+			break ;
+		if (t == 0)
+			j++;
+		else
+			j--;
 	}
 	return (j);
 }
@@ -50,7 +57,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	start = check_if_set(s1, set, 0);
 	last = check_if_set(s1, set, 1) + 1;
 	i = 0;
-	if (start >= (int)ft_strlen(s1))
+	if (start >= (int)ft_strlen(s1) || start >= last)
 	{
 		dest = malloc(1);
 		if (!dest)
