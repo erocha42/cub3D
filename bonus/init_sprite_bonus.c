@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_sprite.c                                      :+:      :+:    :+:   */
+/*   init_sprite_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:54:13 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/17 20:25:33 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/20 15:37:03 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	clean_walls(t_game *game)
 {
@@ -82,15 +82,15 @@ static void	init_wall_textures(t_game *game)
 static void	init_extra_textures(t_game *game)
 {
 	game->sky_img.img = mlx_xpm_file_to_image(game->mlx_ptr,
-			"./resources/sprites/sky.xpm",
-			&game->sky_img.width, &game->sky_img.height);
+			"./resources/sprites/sky.xpm", &game->sky_img.width,
+			&game->sky_img.height);
 	if (!game->tex_sprite.img)
 		clean_exit(game, NO_ERROR);
 	game->sky_img.addr = mlx_get_data_addr(game->sky_img.img,
 			&game->sky_img.bpp, &game->sky_img.line_len, &game->sky_img.endian);
 	game->tex_d.img = mlx_xpm_file_to_image(game->mlx_ptr,
-			"./resources/sprites/Door-10.xpm",
-			&game->tex_d.width, &game->tex_d.height);
+			"./resources/sprites/Door-10.xpm", &game->tex_d.width,
+			&game->tex_d.height);
 	if (!game->tex_d.img)
 		clean_exit(game, NO_ERROR);
 	game->tex_d.addr = mlx_get_data_addr(game->tex_d.img, &game->tex_d.bpp,

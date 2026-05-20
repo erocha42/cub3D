@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_sprite.c                                    :+:      :+:    :+:   */
+/*   update_sprite_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 16:00:39 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/18 18:28:44 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:20:44 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include <cub3d_bonus.h>
 
 static void	check_jumpscare(t_game *game)
 {
@@ -23,7 +23,8 @@ static void	check_jumpscare(t_game *game)
 		jumpscare(game);
 		ma_sound_set_volume(&game->monster_sound, 0);
 		ma_sound_start(&game->jumpscare_sound);
-		usleep(2000000);
+		ma_sound_set_volume(&game->jumpscare_sound, 3);
+		usleep(4000000);
 		clean_exit(game, NO_ERROR);
 	}
 }

@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_draw.c                                     :+:      :+:    :+:   */
+/*   raycast_draw_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:07:37 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/15 17:07:55 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 15:37:15 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	calc_tex_x(t_game *game, t_raycast *r)
 {

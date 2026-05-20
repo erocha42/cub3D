@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 19:15:18 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/19 16:49:38 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 15:00:08 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	path_checker(t_game *game, char *path)
 	close(fd);
 	return (1);
 }
-
 
 int	color_recovery(t_game *game, char *line)
 {

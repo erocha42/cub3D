@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data_handling_utils.c                              :+:      :+:    :+:   */
+/*   data_handling_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 19:15:18 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/19 18:13:45 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 15:36:20 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static int	path_checker(t_game *game, char *path)
 {
@@ -30,12 +30,10 @@ int	color_recovery(t_game *game, char *line)
 	char	**tab;
 
 	tab = ft_split(line, ',');
-	if (!tab)
-		clean_exit(game, MALLOC_ERROR);
 	i = 0;
-	while (tab[i])
+	while (tab && tab[i])
 		i++;
-	if (i != 3)
+	if (!tab || i != 3)
 	{
 		free_tab(tab, i);
 		clean_exit(game, DATA_ERROR);

@@ -160,3 +160,26 @@
    ...
    fun:_dl_open
 }
+{
+   Ignore_PulseAudio_Common
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libpulsecommon-*.so*
+}
+
+{
+   Ignore_PulseAudio_Lib
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libpulse.so.*
+}
+
+{
+   Ignore_PulseAudio_Miniaudio_Init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:ma_context_init__pulse
+}

@@ -1,46 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/19 18:02:36 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 15:37:13 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
+
+static int	check_data(t_game *game, int c[6], int mode)
+{
+	if (mode == 1)
+	{
+		if (!c[0] || !c[1] || !c[2] || !c[3] || !c[4] || !c[5])
+			return (1);
+		return (0);
+	}
+	if (c[0] > 2 || c[1] > 2 || c[2] > 2 || c[3] > 2 || c[4] > 2 || c[5] > 2)
+		clean_exit(game, DATA_ERROR);
+	return (0);
+}
 
 static void	data_handling(t_game *game)
 {
 	char	*line;
-	char	*temp_check;
-	int		data_ctr[6];
+	char	*temp;
+	int		c[6];
 
-	data_counter_init(data_ctr);
+	data_counter_init(c);
 	line = get_next_line(game->fd);
-	while (line && (!data_ctr[0] || !data_ctr[1] || !data_ctr[2] || !data_ctr[3]
-			|| !data_ctr[4] || !data_ctr[5]))
+	while (line && check_data(game, c,1))
 	{
-		temp_check = ft_strtrim(line, " \t\n");
-		if (!temp_check || temp_check[0] == '\0')
+		temp = ft_strtrim(line, " \t\n");
+		if (temp && temp[0] != '\0')
 		{
-			if (temp_check)
-				free(temp_check);
-			free(line);
-			line = get_next_line(game->fd);
-			continue ;
+			game->trim = ft_strtrim(line, "\n");
+			check_data(game, c, 0);
+			data_recovery(game, skip(game->trim), c);
+			free(game->trim);
+			game->trim = NULL;
 		}
-		free(temp_check);
-		game->trim = ft_strtrim(line, "\n");
+		if (temp)
+			free(temp);
 		free(line);
-		if (data_ctr[0] > 2 || data_ctr[1] > 2 || data_ctr[2] > 2
-			|| data_ctr[3] > 2 || data_ctr[4] > 2 || data_ctr[5] > 2)
-			clean_exit(game, DATA_ERROR);
-		data_recovery(game, skip(game->trim), data_ctr);
-		free(game->trim);
-		game->trim = NULL;
 		line = get_next_line(game->fd);
 	}
 	free(line);

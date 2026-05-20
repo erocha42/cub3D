@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 15:05:17 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/19 14:23:35 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 15:42:12 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	init_player_state(t_game *game)
 {
@@ -24,7 +24,7 @@ static void	init_player_state(t_game *game)
 	game->player.torch = 0;
 	game->sprite.y = -1;
 	game->sprite.x = -1;
-	game->sprite_path = "./resources/sprites/paco.xpm";
+	game->sprite_path = "./resources/sprites/gmt.xpm";
 	game->heatmap = NULL;
 }
 

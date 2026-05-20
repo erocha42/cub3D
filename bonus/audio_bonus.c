@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   audio.c                                            :+:      :+:    :+:   */
+/*   audio_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 16:36:50 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/18 18:29:28 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:18:34 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define MINIAUDIO_IMPLEMENTATION
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include "miniaudio.h"
 
 void	init_audio(t_game *game)
@@ -26,7 +26,7 @@ void	init_audio(t_game *game)
 	result = ma_sound_init_from_file(&game->audio_engine,
 			"./resources/audios/GMT.wav", 0, NULL, NULL, &game->monster_sound);
 	result2 = ma_sound_init_from_file(&game->audio_engine,
-			"./resources/audios/oh-tgl-prof.wav", 0, NULL, NULL,
+			"./resources/audios/rizz.wav", 0, NULL, NULL,
 			&game->jumpscare_sound);
 	result3 = ma_sound_init_from_file(&game->audio_engine,
 			"./resources/audios/step.wav", 0, NULL, NULL, &game->step_sound);
