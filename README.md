@@ -49,7 +49,7 @@ make bonus
 
 *To run the program, provide a .cub configuration map file as an argument:*
 ```bash
-./fdf maps
+./cub3d resources/maps/map.cub
 ```
 
 ### Controls
