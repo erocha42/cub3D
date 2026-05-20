@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/20 15:14:51 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:35:49 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	data_handling(t_game *game)
 
 	data_counter_init(c);
 	line = get_next_line(game->fd);
-	while (line && check_data(game, c,1))
+	while (line && check_data(game, c, 1))
 	{
 		temp = ft_strtrim(line, " \t\n");
 		if (temp && temp[0] != '\0')
