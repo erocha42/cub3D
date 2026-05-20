@@ -1,0 +1,12 @@
+NO ./resources/sprites/wall3.xpm
+
+111111
+100001
+1000N1
+111111
+
+SO ./resources/sprites/wall3.xpm
+WE ./resources/sprites/wall2.xpm
+EA ./resources/sprites/wall2.xpm
+F 220,100,0
+C 225,30,0

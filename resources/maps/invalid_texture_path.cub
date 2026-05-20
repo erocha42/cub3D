@@ -1,0 +1,12 @@
+NO ./resources/sprites/a.xpm
+SO ./resources/sprites/b.xpm
+WE ./resources/sprites/c.xpm
+EA ./resources/sprites/d.xpm
+
+F 220,100,0
+C 225,30,0
+
+111111
+100001
+1000N1
+111111
