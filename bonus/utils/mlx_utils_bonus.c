@@ -6,7 +6,7 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:03:21 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/20 15:36:32 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 17:07:22 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,13 @@ int	get_tex_color(t_img *img, int x, int y)
 
 	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	return (*(unsigned int *)dst);
+}
+
+void	process_trim(t_game *game, int c[6])
+{
+	if (c[0] > 2 || c[1] > 2 || c[2] > 2 || c[3] > 2 || c[4] > 2 || c[5] > 2)
+		clean_exit(game, DATA_ERROR);
+	data_recovery(game, skip(game->trim), c);
+	free(game->trim);
+	game->trim = NULL;
 }

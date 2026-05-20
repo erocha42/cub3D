@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:23:18 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/17 20:25:07 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/20 17:06:54 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,13 @@ int	get_tex_color(t_img *img, int x, int y)
 
 	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	return (*(unsigned int *)dst);
+}
+
+void	process_trim(t_game *game, int c[6])
+{
+	if (c[0] > 2 || c[1] > 2 || c[2] > 2 || c[3] > 2 || c[4] > 2 || c[5] > 2)
+		clean_exit(game, DATA_ERROR);
+	data_recovery(game, skip(game->trim), c);
+	free(game->trim);
+	game->trim = NULL;
 }

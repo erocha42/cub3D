@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:57:55 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/20 16:45:51 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/20 17:07:01 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,6 @@ void			rotate_player_key(t_game *game, double rot);
 void			move_lr(t_game *game, double speed);
 void			move_fb(t_game *game, double speed);
 int				get_tex_color(t_img *img, int x, int y);
+void			process_trim(t_game *game, int c[6]);
 
 #endif

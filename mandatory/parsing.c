@@ -6,24 +6,11 @@
 /*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 16:55:49 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/20 16:35:49 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 17:07:48 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int	check_data(t_game *game, int c[6], int mode)
-{
-	if (mode == 1)
-	{
-		if (!c[0] || !c[1] || !c[2] || !c[3] || !c[4] || !c[5])
-			return (1);
-		return (0);
-	}
-	if (c[0] > 2 || c[1] > 2 || c[2] > 2 || c[3] > 2 || c[4] > 2 || c[5] > 2)
-		clean_exit(game, DATA_ERROR);
-	return (0);
-}
 
 static void	data_handling(t_game *game)
 {
@@ -33,23 +20,20 @@ static void	data_handling(t_game *game)
 
 	data_counter_init(c);
 	line = get_next_line(game->fd);
-	while (line && check_data(game, c, 1))
+	while (line && (!c[0] || !c[1] || !c[2] || !c[3] || !c[4] || !c[5]))
 	{
 		temp = ft_strtrim(line, " \t\n");
 		if (temp && temp[0] != '\0')
-		{
 			game->trim = ft_strtrim(line, "\n");
-			check_data(game, c, 0);
-			data_recovery(game, skip(game->trim), c);
-			free(game->trim);
-			game->trim = NULL;
-		}
 		if (temp)
 			free(temp);
 		free(line);
+		if (game->trim)
+			process_trim(game, c);
 		line = get_next_line(game->fd);
 	}
-	free(line);
+	if (line)
+		free(line);
 }
 
 static char	*search_map(t_game *game)

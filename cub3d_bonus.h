@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 13:57:55 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/20 16:45:56 by erocha--         ###   ########.fr       */
+/*   Updated: 2026/05/20 17:07:16 by mchesnea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,9 +221,6 @@ int				pass_line(int fd, char *line);
 void			rotate_player_key(t_game *game, double rot);
 void			move_lr(t_game *game, double speed);
 void			move_fb(t_game *game, double speed);
-
-// BONUS :
-
 void			mouse_hook(t_game *game);
 void			update_sprite(t_game *game);
 void			render_sprite(t_game *game);
@@ -248,5 +245,6 @@ void			rotate_player_key(t_game *game, double rot);
 void			move_lr(t_game *game, double speed);
 void			move_fb(t_game *game, double speed);
 double			get_move_speed(t_game *game);
+void			process_trim(t_game *game, int c[6]);
 
 #endif
