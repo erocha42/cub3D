@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 14:27:14 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/20 15:36:44 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:01:04 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static void	clean_mlx_ptrs(t_game *game)
 static void	clean_exit2(t_game *game)
 {
 	if (game->trim)
+	{
 		free(game->trim);
+		game->trim = NULL;
+	}
 	if (game->doors)
 		free(game->doors);
 	if (game->heatmap)

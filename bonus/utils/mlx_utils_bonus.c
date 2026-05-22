@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 17:03:21 by mchesnea          #+#    #+#             */
-/*   Updated: 2026/05/20 17:07:22 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:13:16 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	process_trim(t_game *game, int c[6])
 	if (c[0] > 2 || c[1] > 2 || c[2] > 2 || c[3] > 2 || c[4] > 2 || c[5] > 2)
 		clean_exit(game, DATA_ERROR);
 	data_recovery(game, skip(game->trim), c);
-	free(game->trim);
-	game->trim = NULL;
+	if (game->trim)
+	{
+		free(game->trim);
+		game->trim = NULL;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapper_utils_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchesnea <mchesnea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erocha-- <erocha--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 18:22:55 by erocha--          #+#    #+#             */
-/*   Updated: 2026/05/20 15:36:25 by mchesnea         ###   ########.fr       */
+/*   Updated: 2026/05/21 15:15:13 by erocha--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,10 @@ static void	player_update(t_game *game, char *line, int line_nbr, int i)
 	game->direction_player = line[i];
 }
 
-static void	m_update(t_game *game, char *line, int line_nbr, int i)
+static void	m_update(t_game *game, int line_nbr, int i)
 {
 	if (game->sprite.x != -1)
-	{
-		free(line);
 		clean_exit(game, MAP_ERROR);
-	}
 	game->sprite.x = i + 0.5;
 	game->sprite.y = line_nbr + 0.5;
 	game->map[line_nbr][i] = '0';
@@ -100,7 +97,7 @@ void	filler(t_game *game, size_t end_line, char *line, int line_nbr)
 			|| line[i] == 'S')
 			player_update(game, line, line_nbr, i);
 		else if (line[i] == 'M')
-			m_update(game, line, line_nbr, i);
+			m_update(game, line_nbr, i);
 		else if (!ft_isprint(line[i]))
 			game->map[line_nbr][i] = ' ';
 		else if (line[i] == '1' || line[i] == '0' || line[i] == 'D')
