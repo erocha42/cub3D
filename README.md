@@ -2,7 +2,7 @@
 
 # cub3D (Nextbots Edition)
 
-![Norminette](https://img.shields.io/badge/norminette-passing-success?style=flat-square) ![Score](https://img.shields.io/badge/score-...%2F100-brightgreen?style=flat-square) ![Language](https://img.shields.io/badge/language-C-blue?style=flat-square)
+![Norminette](https://img.shields.io/badge/norminette-passing-success?style=flat-square) ![Score](https://img.shields.io/badge/score-125%2F100-brightgreen?style=flat-square) ![Language](https://img.shields.io/badge/language-C-blue?style=flat-square)
 
 ![cub3D Preview](https://github.com/user-attachments/assets/07853942-57dc-4631-ba8c-69a80e4f25a2)
 
@@ -64,16 +64,3 @@ make bonus
 | **`E`** | Interact (Open/close doors) |
 | **`R`** | FlashLight (Active/Disable Flash) |
 | **`Left Shift`** | Sprint (Evade Nextbots) |
-
-## Resources
-
-### Resources
-
-* **Lode's Raycasting Tutorial**: The primary reference for understanding the DDA algorithm and texture mapping mathematics.
-* **Wolfenstein 3D (1992)**: The classic reference for 2.5D rendering styles and early FPS mechanics.
-* **42 Docs / MiniLibX**: Official technical documentation for window management and pixel manipulation.
-
-### AI Usage
-
-* **Documentation**: Structuring and translating the project documentation to meet 42 standards.
-* **Problem Solving**: Identifying and debugging issues within event handling and ensuring memory management remained leak-free.
